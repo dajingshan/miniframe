@@ -1,0 +1,85 @@
+inherited connparam: Tconnparam
+  Height = 290
+  Width = 468
+  Caption = '连接参数'
+  ClientHeight = 290
+  ClientWidth = 468
+  OnCreate = FormCreate
+  inherited plMain: TPanel
+    Height = 290
+    Width = 468
+    ClientHeight = 290
+    ClientWidth = 468
+    inherited plTopBar: TPanel
+      Width = 466
+      ClientWidth = 466
+      inherited lbtitle: TLabel
+        Caption = '连接参数'
+      end
+      inherited btnRightBtns: TPanel
+        Left = 376
+      end
+    end
+    object lblMsg: TLabel[1]
+      Left = 48
+      Height = 121
+      Top = 158
+      Width = 249
+      AutoSize = False
+      Caption = 'msg'
+      Font.Color = clBlue
+      Font.Height = -14
+      Font.Name = 'Segoe UI'
+      Font.Style = [fsBold]
+      Layout = tlCenter
+      ParentColor = False
+      ParentFont = False
+      WordWrap = True
+    end
+    object lblsp2: TLabel[2]
+      Left = 48
+      Height = 15
+      Top = 80
+      Width = 48
+      Caption = '服务地址'
+      ParentColor = False
+    end
+    object edtUrl: TEdit[3]
+      Left = 104
+      Height = 23
+      Top = 77
+      Width = 241
+      TabOrder = 1
+      Text = '127.0.0.1:899'
+    end
+    object Panel1: TPanel[4]
+      Left = 336
+      Height = 35
+      Top = 229
+      Width = 105
+      ClientHeight = 35
+      ClientWidth = 105
+      Color = 16745481
+      ParentBackground = False
+      ParentColor = False
+      TabOrder = 2
+      object Label4: TLabel
+        Cursor = crHandPoint
+        Left = 1
+        Height = 33
+        Top = 1
+        Width = 103
+        Align = alClient
+        Alignment = taCenter
+        Caption = '确定'
+        Font.Color = clWindow
+        Font.Height = -15
+        Font.Name = 'Segoe UI'
+        Layout = tlCenter
+        ParentColor = False
+        ParentFont = False
+        OnClick = Label4Click
+      end
+    end
+  end
+end

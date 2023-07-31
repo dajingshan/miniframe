@@ -1,0 +1,46 @@
+﻿"classname=TRectangle,name=rtBackGround,width=1024,height=1024,top=0,left=50.5,ALIGN=1,Version=8.5,Repeat_Image=0,IsCenter=0,ImageWrapMode=0,HTML_Repeat_Image=0,HTML_IsCenter=0,HTML_ImageWrapMode=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=2,SIDE-COLOR=#E8E7E7,SIDE-TYPE=1,color2=#A52A2A,color3=#FF7F50,ColorCreator=0,htmlcolor=#FFFFFF,htmlcolor2=#FF00FF,htmlcolor3=#FF0000,htmlColorCreator=0,PosSizeWidth=1024,PosSizeHeight=1024,NoPublish=0,NoCssFile=1,NoBackgroup=1,NoSysHtmlTag=1,Opacity=1,Shadow_Stroke_Thickness=0,Shadow_Stroke_Color=#E8E7E7","parent=rtBackGround,classname=TmTextarea,name=Textarea_817169,width=534.5,height=474,top=0,left=0,position=0,display=0,float=0,PosSizeY=0,PosSizeX=0,PosSizeWidth=534.5,PosSizeHeight=474,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=0,b_XRadius=5,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,RadiusPoses=0123,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,""Text=<html>
+<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var
+  lp: integer;
+%>
+
+<%
+begin
+%>  
+<head>
+<meta http-equiv=""""content-type"""" content=""""text/html; charset=UTF-8"""">
+<title>与HTML元素混合编程</title>
+</head>
+<body>
+<div>你好，当前时间是：<% print(DatetimeToStr(now)); %>。下面将生成<font color=red> 20 </font>个input，偶数行的字体是红色。</div>
+<br>
+ <% 
+  for lp := 1 to 20 do 
+  begin 
+    if (lp mod 2 = 0) then
+    begin 
+  %> 
+      <input style=""""color:red;font-size:6"""" id= """"id<% print(inttostr(lp));  %>"""" value=""""<% print(DatetimeToStr(IncSecond(now, lp)));%>""""/>
+    <%  
+    end else
+    begin
+    %> 
+      <input id= """"id<% print(inttostr(lp));  %>"""" value=""""<% print(DatetimeToStr(IncDay(now, lp)));%>""""/>
+    <%
+    end;
+    %>
+    <br>
+    <br>
+  <%
+  end;
+  %>  
+</body>
+<%
+end;
+%>
+</html>
+"",EditTypeHtmlTag=0,NoParseHTML=0,FONT-SIZE=12,ALIGN-H=1,ALIGN-V=1,TextareaTypeHtmlTag=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#EEEAEA,SIDE-TYPE=1",IsMobile=1

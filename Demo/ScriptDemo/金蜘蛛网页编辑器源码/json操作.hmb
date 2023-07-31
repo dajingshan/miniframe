@@ -1,0 +1,113 @@
+﻿"classname=TRectangle,name=rtBackGround,width=1024,height=1024,top=0,left=103,ALIGN=1,Version=8.5,Repeat_Image=0,IsCenter=0,ImageWrapMode=0,HTML_Repeat_Image=0,HTML_IsCenter=0,HTML_ImageWrapMode=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=2,SIDE-COLOR=#E8E7E7,SIDE-TYPE=1,color2=#A52A2A,color3=#FF7F50,ColorCreator=0,htmlcolor=#FFFFFF,htmlcolor2=#FF00FF,htmlcolor3=#FF0000,htmlColorCreator=0,PosSizeWidth=1024,PosSizeHeight=1024,NoPublish=0,NoCssFile=1,NoBackgroup=1,NoSysHtmlTag=1,Opacity=1,Shadow_Stroke_Thickness=0,Shadow_Stroke_Color=#E8E7E7","parent=rtBackGround,classname=TmTextarea,name=Textarea_817169,width=581.5,height=769,top=51,left=27.5,position=0,display=0,float=0,PosSizeY=51,PosSizeX=27.5,PosSizeWidth=581.5,PosSizeHeight=769,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=0,b_XRadius=5,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,RadiusPoses=0123,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,""Text=<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  aa: string; 
+  json, js2, js3, json_sub: TminiJson;
+  lp: integer;
+  ms: TMemoryStream;
+%>
+
+<%
+begin
+  //json 用的mormot Json 库
+  (*
+  {
+ """"vip"""": true,
+ """"age"""": 33,
+ """"telephones"""": [
+  """"000000000"""",""""1380000000""""],                                                                                      
+ """"addresses"""": [
+  {
+   """"pc"""": 57000,
+   """"address"""": """"\u5e7f\u4e1c\u7701\u73e0\u6d77\u9999\u6d32\u533a"""",
+   """"city"""": """"\u73e0\u6d77\u5e02""""
+  },{
+   """"pc"""": 44000,
+   """"address"""": """"\u5e7f\u4e1c\u7701\u6df1\u5733\u5357\u5c71\u533a"""",
+   """"city"""": """"\u73e0\u6d77\u5e02""""
+  }],
+ """"size"""": 1.83,
+ """"name"""": """"\u674e\u519b""""
+ }
+  *)
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  
+  Print('本脚本的Json对象，基于 mormot Json 的封装'#13#10#13#10);
+  //上面的Json下面这样生成, 本脚本的Json对象，基于 TSuperObject  
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO; //初始化 或 json.Init;
+
+  json.S['name'] := '李军';
+  json.B['vip'] := TRUE;  
+  
+  //字符串数组
+  json.A_S['telephones'] := '000000000';
+  json.A_S['telephones'] := '1380000000';    
+ 
+  json.I['age'] := 33; 
+  json.D['size'] := 1.83;   
+    
+  //对象数组                                                 
+  json_sub := Pub.GetJson;  
+  json_sub.SO; //初始化 或 json.Init;    
+  json_sub.S['address'] := '广东省珠海香洲区';
+  json_sub.S['city'] := '珠海市';
+  json_sub.I['pc'] := 57000;
+  json.A['addresses'] := json_sub;
+
+  json_sub := Pub.GetJson;  
+  json_sub.SO; //初始化 或 json.Init;    
+  json_sub.S['address'] := '广东省深圳南山区';
+  json_sub.S['city'] := '深圳市';
+  json_sub.I['pc'] := 44000;
+  json.A['addresses'] := json_sub;
+  
+  print(#13#10'-------------输出生成的JSON-------------'#13#10);
+  aa := json.AsJSon(true);
+  print(aa);
+  
+  //把json保存到TStream
+  ms := Pub.GetMs; //这样创建TMemoryStream对象不需要自己释放，系统自动管理
+  json.SaveToStream(ms); 
+  
+  //把Json保存到文件中
+  //json.SaveToFile('d:\test.json');
+ 
+  //解析JSON
+  print(#13#10#13#10);
+  print(#13#10'-------------解析JSON-------------'#13#10);
+  json := Pub.GetJson;
+  
+  {//从字符串中加载Json
+  print(#13#10'<br>从字符串中加载Json');
+  json.SOS(aa); //或 json.loadfromstring(aa); }
+  
+  //从TStream加载Json
+  print('从TStream加载Json：'#13#10);
+  ms.Position := 0;
+  json.LoadFromStream(ms);
+  
+  //从文件中加载Json
+  //print(#13#10'从文件中加载Json');
+  //json.LoadFromFile('d:\test.json');
+       
+  print(#13#10'字符串数组'#13#10);
+  print(json.O['telephones'].AsJson(true));;
+  print(#13#10'字符串数组第一项：' + json.O['telephones'].A_GS[0]); //如果是读取boolean用 A_GB; 如果float 用A_GD，如果是整形用 A_GI
+ 
+  print(#13#10'字符串数组第二项：' + json.A['telephones'].A_GS[1]);
+  print(#13#10#13#10'读取对象数组，全部输出address项：'#13#10);
+  
+  for lp := 0 to json.A['addresses'].length - 1 do 
+    print(json.A['addresses'][lp].S['address'] + ''#13#10);
+  
+ 
+  print(#13#10'读取对象数组，删除数组第一项后输出address项：'#13#10);  
+  json.A['addresses'].deletebyindex(0);
+  for lp := 0 to json.A['addresses'].length - 1 do 
+    print(json.A['addresses'][lp].S['address'] + ''#13#10);// }
+end;
+%>"",EditTypeHtmlTag=0,NoParseHTML=0,FONT-SIZE=12,ALIGN-H=1,ALIGN-V=1,TextareaTypeHtmlTag=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#EEEAEA,SIDE-TYPE=1",IsMobile=1

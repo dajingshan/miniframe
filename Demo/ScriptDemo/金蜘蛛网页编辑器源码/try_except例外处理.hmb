@@ -1,0 +1,53 @@
+﻿"classname=TRectangle,name=rtBackGround,width=1024,height=1024,top=0,left=79.5,ALIGN=1,Version=8.5,Repeat_Image=0,IsCenter=0,ImageWrapMode=0,HTML_Repeat_Image=0,HTML_IsCenter=0,HTML_ImageWrapMode=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=2,SIDE-COLOR=#E8E7E7,SIDE-TYPE=1,color2=#A52A2A,color3=#FF7F50,ColorCreator=0,htmlcolor=#FFFFFF,htmlcolor2=#FF00FF,htmlcolor3=#FF0000,htmlColorCreator=0,PosSizeWidth=1024,PosSizeHeight=1024,NoPublish=0,NoCssFile=1,NoBackgroup=1,NoSysHtmlTag=1,Opacity=1,Shadow_Stroke_Thickness=0,Shadow_Stroke_Color=#E8E7E7","parent=rtBackGround,classname=TmTextarea,name=Textarea_817169,width=955,height=678,top=0,left=0,position=0,display=0,float=0,PosSizeY=0,PosSizeX=0,PosSizeWidth=955,PosSizeHeight=678,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=0,b_XRadius=5,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,RadiusPoses=0123,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,""Text=<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var
+  i: integer;
+  SL: TStringlist;
+%>
+
+<%
+begin
+  print('<font color=red>说明：pascalscript例外处理不能像delphi或lazaru那样能通过""""on e:exception do""""直接能获取到错误信息，需要通过ExceptionParam(ExceptionParam相当于pascal的exception.message)函数获取！</font><br><br>');
+  try
+    i := 0;
+    print('SL Error 9999999999：' + ExceptionParam + '<br>');
+    print('以下执行将引发除零错！<br><br>');
+    print('4/i=' + floattostr(4/i)); 
+    print('能看到这行表示没出错！<br>');
+  except
+    //不支持 on e:exception do
+    print('出错了!出错信息：' + ExceptionParam + '<br>');
+    i := 3;
+  end;
+    
+  print('<br>除零错误后继续输出：<br>');
+  print('i=' + IntToStr(i) + ', 4/i=' + floattostr(4/i)); 
+  
+  print('<br><br>');
+  print('<font color=blue>特别说明：前面这种数学运算产生的错误无论是delphi或lazarus都可以在except里通过ExceptionParam获取到错误信息，但对于以下的非数学运算产生的错误，razarus不能在except中获取到错误信息，但delphi可以。请参考下面的代码</font>');
+  print('<br><br>');
+  try
+    SL := Pub.GetSL;
+    SL.savetofile('d:\');
+    
+    print('<font color=blue>lazarus错误处理，由于lazarus在出错时会直接导致程序崩溃，delphi不会，所以lazarus必须要对每个调用函数的出错要在各自函数内处理，' +
+     '如本例的 TStringlist.SaveToFile在miniregister单元中重写了，重写的还有TStringlist.LoadFromFile，TMemoryStream.SaveToFile, TMemoryStream.LoadFromFile。<br>');
+    if trim(lastError) <> '' then //这段代码适用lazarus，不适用delphi，delphi要在except中处理
+    begin
+      print('lazarus获取出错信息： SL Error：' + lastError + '<br>');
+      i := 2;
+    end;
+  except
+    //不支持 on e:exception do
+    print('delphi获取出错信息： SL Error：' + ExceptionParam + '<br>');
+    i := 2;
+  end;
+  
+  print('<br>保存文件出错后继续输出：<br>');
+  print('i=' + IntToStr(i) + ', 4/i=' + floattostr(4/i)); 
+end;
+%>
+"",EditTypeHtmlTag=0,NoParseHTML=0,FONT-SIZE=12,ALIGN-H=1,ALIGN-V=1,TextareaTypeHtmlTag=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#EEEAEA,SIDE-TYPE=1",IsMobile=1

@@ -1,0 +1,151 @@
+﻿"classname=TRectangle,name=rtBackGround,width=1024,height=768,top=0,left=91,ALIGN=1,Version=8.5,Repeat_Image=0,IsCenter=0,ImageWrapMode=0,HTML_Repeat_Image=0,HTML_IsCenter=0,HTML_ImageWrapMode=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=2,SIDE-COLOR=#E8E7E7,SIDE-TYPE=1,color2=#A52A2A,color3=#FF7F50,ColorCreator=0,htmlcolor=#FFFFFF,htmlcolor2=#FF00FF,htmlcolor3=#FF0000,htmlColorCreator=0,PosSizeWidth=1024,PosSizeHeight=768,HtmlTitle=THjhMemoryDataSet内存数据集,Keywords=THjhMemoryDataSet内存数据集,Description=介绍THjhMemoryDataSet内存数据集的使用。THjhMemoryDataSet内存数据集与TminiMemoTable区别：两者都是内存数据集。TminiMemoTable只能用于pascal写的程序中，而THjhMemoryDataSet还可用于js中，同样用于pascal写的程序，TminiMemoTable多线程读取数据不安全，而THjhMemoryDataSet可以多线程安全访问。,NoCssFile=0,NoBackgroup=0,NoSysHtmlTag=0,Opacity=1,Shadow_Stroke_Thickness=0,Shadow_Stroke_Color=#E8E7E7","parent=rtBackGround,classname=TmText,name=text_700302,width=1022,height=50,top=0,left=0,position=1,display=0,float=0,PosSizeY=0,PosSizeX=0,PosSizeWidth=1022,PosSizeHeight=50,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=1,ALIGN=1,AVisibled=1,Parent_Width=1,Auto_Left=1,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,text=THjhMemoryDataSet内存数据集,NoParseHTML=0,TextHtmlTag=0,FONT-NAME=Tahoma,FONT-SIZE=24,FONT-TYPE=0,ALIGN-H=2,ALIGN-V=2,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,SIDE-SIZE=1,SIDE-COLOR=#F2F2F2,SIDE-TYPE=1","parent=rtBackGround,classname=TmImage,name=img_93367,width=96,height=96,top=54,left=376,position=1,display=0,float=0,PosSizeY=54,PosSizeX=376,PosSizeWidth=96,PosSizeHeight=96,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=19,AVisibled=1,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,""PICTUREPATH=E:\eYoue\2006-02-18\New EMaiDemon_China\SuperHtml\ico\96.png"",Repeat_Image=0,IsCenter=0,ImageWrapMode=1,ImageHtmlTag=2,AutoAdjSize_Cur=0,AutoAdjSize_Ori=0,lazyLoad=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#F2F2F2,SIDE-TYPE=1","parent=rtBackGround,classname=TmText,name=bq1,width=1024,height=60,top=154,left=0,position=1,display=0,float=0,PosSizeY=154,PosSizeX=0,PosSizeWidth=1024,PosSizeHeight=60,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=1,Parent_Width=1,Auto_Height=1,Anchors=01,MarginsLeft=0,MarginsTop=10,MarginsBottom=10,PaddingLeft=15,PaddingTop=15,PaddingRight=15,PaddingBottom=15,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,line_height=22,Opacity=1,text=THjhMemoryDataSet内存数据集与TminiMemoTable区别：两者都是内存数据集。TminiMemoTable只能用于pascal写的程序中，而THjhMemoryDataSet还可用于js中，同样用于pascal写的程序，TminiMemoTable多线程读取数据不安全，而THjhMemoryDataSet可以多线程安全访问。,NoParseHTML=0,TextHtmlTag=26,FONT-NAME=Tahoma,ALIGN-H=4,ALIGN-V=2,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,color=#F5F5F5,SIDE-LEFT=1,SIDE-SIZE=5,SIDE-COLOR=#008080,SIDE-TYPE=1","parent=rtBackGround,classname=TmTextarea,name=Textarea_817169,width=436.5,height=504,top=237,left=4,position=0,display=0,float=0,PosSizeY=237,PosSizeX=4,PosSizeWidth=436.5,PosSizeHeight=504,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=0,b_XRadius=5,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,RadiusPoses=0123,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,""Text=<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Sys_DB_Info, Sys_DB_Source, Sys_DB_SQL: string; 
+  Query: TminiQuery; 
+  MT, MT2: TminiMemTable; 
+  ErrStr, TmpStr, TmpStr2, TmpStr3, TmpStr4, TmpStr5: string;  
+  Pooler: TminiPooler; 
+  lp, i, Sys_DB_RecordCount, Sys_DB_PageCount: integer; 
+  SL, SL2, SL3: TStringlist; 
+  mds, mds2: THjhMemoryDataSet;
+%>
+<%
+begin
+
+  { 验证是否登录代码
+  if Request.IsLogin('Logined') then 
+    Print('你已登录<br>')
+  else
+  begin
+    Print('请登录<br>');
+    Response.Redirect('/login1.html');
+    exit;
+  end;} 
+  //登录代码
+  {if (Request.v('username') = 'admin') and (Request.V('password') = '123') then
+  begin    
+    Request.NewSession; //开启一个会话，以保存登录信息
+    Request.Login('Logined'); //执行登录
+    Request.Session.Values['userLoginedusername'] := Request.v('username'); //把用户名保存到会话中
+    Request.Session.Values['userLogineduserid'] := Request.v('username');  //把密码保存到会话中
+    Request.Session.Values['username'] := Request.v('username'); //把用户名保存到会话中
+    Request.Session.Values['userid'] := Request.v('username');  //把密码保存到会话中
+    Request.SaveSession; //把会话保存到服务器上的文件中，如果服务器重启将会加载上次的Session
+    //Response.Redirect(TmpStr); //跳转到网页网址TmpStr中
+    //print(Request.Session.Sessionid); //输出sessionid
+    //print(Request.Session.Values['username']); //输出session保存的username
+  end;}
+  
+  print('<b>如果要使用测试数据库，请下载脚本并安装：<a href=""""https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot"""">https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot</a></b><br><br>'#13#10);
+  
+  //1.用账套代码连接对应的数据库
+  print('<font color=blue><b>1.用""""账套代码""""连接对应的数据库</font>    <font color=red>说明：创建账套请运行 <a href=""""http://127.0.0.1:899/$"""">http://127.0.0.1:899/$</a> 切换到账套设置页，' +
+    '增加一个账套编码为“testzt”、名称为“测试账套”的账套，默认登录用户与密码都是 admin </font><br>'#13#10);
+  //if not Pub.O('testzt', Pooler, Query, ErrStr) then //连接数据库，并返回连接实例Pooler和数据集Query 或不返回连接实例Pooler用下面的语句
+  if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+  begin 
+    print('数据库连接出错：' + ErrStr); 
+    exit; 
+  end;
+   
+  //2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号
+  Query := Pub.Query; //取得实例中的Query
+  print('<br><font color=blue>2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号</font><br>'#13#10); 
+  if not Query.O('select * from users ' +
+    ' where username like ' + QuotedStr(Request.V('username') + '%'), ErrStr) then 
+  begin 
+    Print('读取数据出错：' + ErrStr); 
+    exit; 
+  end; 
+  
+  //3.把数据集复制到 THjhMemoryDataSet 内存数据集中
+  print('<br><font color=blue>3.把数据集复制到 THjhMemoryDataSet 内存数据集中，直接遍历内存数据集，输出username</font><br>'#13#10);
+  mds := Pub.GetDs;
+  mds.Dataset := Query;
+  mds.Open;
+  
+  mds.First;
+  while not mds.Eof do 
+  begin
+    Print(mds.V('username') + '<br>');
+    mds.Next;
+  end;
+  
+  //4.手工创建数据集 
+  print('<br><br><font color=blue>4.手工创建数据集 </font><br>');
+  mds := Pub.GetDs; //或用Pub.CreateMemoryDataSet, 这样创建对象THjhMemoryDataSet不需要自己释放，系统自动管理
+  mds.Fields.FieldList := 'name,sex,class,score'; //建表头
+  mds.Fields.add('avg', ftstring); //也可以这样一项一贡增加表头
+  
+  //添加数据
+  mds.Append;
+  mds.FieldByName('name').AsString := 'lix1';
+  mds.FieldByName('sex').AsString := '男';
+  mds.FieldByName('class').AsString := '二年级';
+  mds.FieldByName('score').AsString := '99';
+  mds.FieldByName('avg').AsString := '98';
+  mds.Append;
+  mds.FieldByName('name').AsString := '小红';
+  mds.FieldByName('sex').AsString := '女';
+  mds.FieldByName('class').AsString := '五年级';
+  mds.FieldByName('score').AsString := '100';
+  mds.FieldByName('avg').AsString := '98';
+  mds.first;
+  while not mds.eof do 
+  begin
+    Print(mds.FieldByName('name').AsString  + '----' + mds.FieldByName('sex').AsString  + '----' + mds.FieldByName('class').AsString + 
+      '----' + mds.FieldByName('score').AsString + '----' + mds.FieldByName('avg').AsString + '<br>');
+    mds.Next;
+  end; 
+  
+  print('<br><br>mds.FieldByName(...).AsString 可以简写成这样：mds.V(...)<br>');
+  mds.first;
+  while not mds.eof do 
+  begin
+    Print(mds.V('name')  + '----' + mds.V('sex')  + '----' + mds.V('class') + 
+      '----' + mds.V('score') + '----' + mds.V('avg') + '<br>');
+    mds.Next;
+  end; 
+  
+  
+  print('<br>以下是另一种方法遍历数据集，这种方法对线程安全，这是与TminiMemTable区别最大优点，还有THjhMemoryDataSet还能直接用到js下<br>');
+  
+  for lp := 0 to mds.RecordCount - 1 do                                                              
+  begin
+    Print(mds.Records[lp, 'name']  + '----' + mds.Records[lp, 'sex']  + '----' + mds.Records[lp, 'class'] + 
+      '----' + mds.Records[lp, 'score'] + '----' + mds.Records[lp, 'avg'] + '<br>');
+  end; 
+  //5.js端的THjhMemoryDataSet 
+  print('<br><br><font color=blue>5.js端的THjhMemoryDataSet</font>');  
+  //} *)
+end;
+%>
+
+
+<script>
+  var mds = getDS(''); //getDS在superpub.js中定义，创建一个THjhMemoryDataSet对象 
+  
+  mds.SetCommaText(<% print(QuotedStr(mds.CommaText)); %>); //<% print(QuotedStr(mds.CommaText)); %> 把后台数据直接生成到客户端，供js端的THjhMemoryDataSet.SetCommaText加载。、
+  mds.First();
+  while(! mds.Eof)
+  { 
+    alert(mds.FieldByName('name').AsString() + '----' + mds.V('sex') + '----' + mds.V('class') + '----' + mds.V('score') + '----' + mds.V('avg'));
+    mds.Next();
+  }
+  
+</script>
+"",EditTypeHtmlTag=0,NoParseHTML=0,FONT-SIZE=12,ALIGN-H=1,ALIGN-V=1,TextareaTypeHtmlTag=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#EEEAEA,SIDE-TYPE=1","parent=rtBackGround,classname=TmRectangle,name=div_863438,width=50,height=50,top=789,left=0,position=1,display=0,float=0,PosSizeY=789,PosSizeX=0,PosSizeWidth=50,PosSizeHeight=50,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,AllHidden=1,Transparent=0,ALIGN=1,AVisibled=1,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,DB_Form.db_source=testzt,""DB_Form.read_table_sql= //注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := 'select * from [users$] where usercode = ' + QuotedStr(Request.V('usercode'));'
+
+Sys_DB_SQL := 'select * from users where usercode = ' + QuotedStr(Request.V('usercode'));
+"",""DB_Form.UpdateSuccess_Script= Print('<script>var intervalId = setInterval(function(){ clearInterval(intervalId); if((window.performance.navigation.type==0)&&(window.name != """"isReload"""")){window.name = """"isReload"""";mymsg(""""保存数据成功！"""");};//这种对话框一定要用延时方式才能正常执行' + #13#10 + '},1000);</script>'); 
+"",""DB_Form.UpdateFail_Script=      Print('[%@clear@%]'); print('<font color=red size=8>保存数据出错：' + ErrStr + '</font>' + Sys_DB_SQL);      
+"",""DB_Form.InsertSuccess_Script= Print('<script>var intervalId = setInterval(function(){ clearInterval(intervalId); if((window.performance.navigation.type==0)&&(window.name != """"isReload"""")){window.name = """"isReload"""";mymsg(""""新增数据成功！"""");};//这种对话框一定要用延时方式才能正常执行' + #13#10 + '},1000);</script>'); 
+"",""DB_Form.InsertFail_Script=      Print('[%@clear@%]'); print('<font color=red size=8>增加数据出错：' + ErrStr + '</font>' + Sys_DB_SQL);      
+"",""DB_Form.AftDelete_Js=   if(r == '[200ok]'){     mymsg(""""删除成功！""""); var intervalId = setInterval(function(){ clearInterval(intervalId); location=location;},3000);    }else{myalert(r)};
+"",""DB_Form.AftSave_Js=       if (trim(r)!=""""""""){if(Pos(""""成功"""",r)>0){mymsg(""""保存成功！"""")} else {myalert(r);} } 
+"",DB_Form.NeedTrans=0,DB_Form.PageCount=20,DB_Form.PageIndexName=pn,DB_Form.PageMaxCount=100,DB_Form.IsGrid=0,DB_Grid.NeedSave=0,DB_Grid.selcolor=#CAFFFF,DB_Grid.oddcolor=#F2FFEE,DB_Grid.evencolor=#FFFFFF,""DB_Grid.onrowcaljs=//当前单元格，f：字段名 value：值
+"",DB_Form.NeedPage=0,DB_Form.ismx=0,DB_Form.snofield=sno,DB_Form.autofillsno=1,DB_Form.NeedRowNumber=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#F2F2F2,SIDE-TYPE=1",IsMobile=1

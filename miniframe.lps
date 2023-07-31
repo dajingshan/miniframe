@@ -1,0 +1,747 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Active="Default"/>
+    <Units Count="57">
+      <Unit0>
+        <Filename Value="miniframe.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="14"/>
+        <TopLine Value="25"/>
+        <CursorPos Y="50"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="minidb.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="162"/>
+        <CursorPos X="46" Y="178"/>
+        <UsageCount Value="206"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="miniregister.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="315"/>
+        <CursorPos X="50" Y="353"/>
+        <UsageCount Value="202"/>
+        <Bookmarks Count="1">
+          <Item0 X="88" Y="719" ID="1"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="lazmainunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lazmain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="51" Y="30"/>
+        <UsageCount Value="135"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="D:\lazarus\components\PascalScript\Source\uPSCompiler.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1626"/>
+        <CursorPos X="14" Y="1640"/>
+        <UsageCount Value="40"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="D:\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10275"/>
+        <CursorPos X="33" Y="10285"/>
+        <UsageCount Value="2"/>
+        <Bookmarks Count="2">
+          <Item0 X="17" Y="2059" ID="5"/>
+          <Item1 X="19" Y="7491" ID="8"/>
+        </Bookmarks>
+      </Unit5>
+      <Unit6>
+        <Filename Value="D:\lazarus\components\PascalScript\Source\uPSUtils.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="310"/>
+        <CursorPos X="56" Y="326"/>
+        <UsageCount Value="51"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\packages\fcl-db\src\base\db.pas"/>
+        <UnitName Value="DB"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="185"/>
+        <CursorPos X="5" Y="218"/>
+        <UsageCount Value="77"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="699"/>
+        <CursorPos X="14" Y="715"/>
+        <UsageCount Value="133"/>
+        <Bookmarks Count="1">
+          <Item0 X="47" Y="161" ID="2"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="mormothttps.pas"/>
+        <EditorIndex Value="16"/>
+        <TopLine Value="1143"/>
+        <CursorPos X="11" Y="1164"/>
+        <UsageCount Value="119"/>
+        <Bookmarks Count="1">
+          <Item0 X="11" Y="1164" ID="3"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="minipub.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="15"/>
+        <CursorPos X="11" Y="34"/>
+        <UsageCount Value="79"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="minihttp.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="620"/>
+        <CursorPos Y="651"/>
+        <UsageCount Value="92"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="components\superobject\supertimezone.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="78"/>
+        <CursorPos X="32" Y="95"/>
+        <UsageCount Value="14"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\rtl\win\wininc\redef.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="669"/>
+        <CursorPos X="3" Y="84"/>
+        <UsageCount Value="57"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="components\superobject\superobject.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="120"/>
+        <CursorPos X="42" Y="137"/>
+        <UsageCount Value="57"/>
+        <Bookmarks Count="1">
+          <Item0 X="20" Y="136" ID="2"/>
+        </Bookmarks>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="components\superobject\superdate.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="19"/>
+        <CursorPos X="119" Y="42"/>
+        <UsageCount Value="57"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="D:\lazarus\components\PascalScript\Source\uROPSServerLink.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="736"/>
+        <CursorPos X="42" Y="702"/>
+        <UsageCount Value="13"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="minicomponents.pas"/>
+        <TopLine Value="182"/>
+        <CursorPos X="35" Y="203"/>
+        <UsageCount Value="115"/>
+        <Bookmarks Count="1">
+          <Item0 X="8" Y="271" ID="5"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS\TdsClassesUni.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1289"/>
+        <CursorPos X="56" Y="341"/>
+        <UsageCount Value="59"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\rtl\objpas\sysutils\finah.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="9"/>
+        <CursorPos X="10" Y="26"/>
+        <UsageCount Value="72"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\rtl\objpas\sysutils\diskh.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="48" Y="3"/>
+        <UsageCount Value="72"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="PubSysUnit.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="123"/>
+        <CursorPos X="54" Y="145"/>
+        <UsageCount Value="78"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="D:\lazarus\components\PascalScript\Source\uPSR_buttons.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="33" Y="24"/>
+        <UsageCount Value="47"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="PubFileUnit.pas"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="860"/>
+        <CursorPos X="73" Y="873"/>
+        <UsageCount Value="96"/>
+        <Loaded Value="True"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\rtl\win\wininc\ascdef.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="107"/>
+        <CursorPos X="10" Y="124"/>
+        <UsageCount Value="41"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\rtl\win\wininc\base.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="146"/>
+        <CursorPos X="40" Y="149"/>
+        <UsageCount Value="41"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\DBAccess.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8858"/>
+        <CursorPos Y="8875"/>
+        <UsageCount Value="54"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="D:\lazarus\components\PascalScript\Source\x64.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="25" Y="12"/>
+        <UsageCount Value="40"/>
+        <Bookmarks Count="1">
+          <Item0 X="7" Y="784" ID="3"/>
+        </Bookmarks>
+      </Unit27>
+      <Unit28>
+        <Filename Value="D:\lazarus\fpc\3.2.0\source\rtl\objpas\classes\classesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="517"/>
+        <CursorPos X="14" Y="552"/>
+        <UsageCount Value="73"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="..\test\unit1.pas"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Unit1"/>
+        <EditorIndex Value="13"/>
+        <TopLine Value="110"/>
+        <CursorPos X="63" Y="116"/>
+        <UsageCount Value="57"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="components\mORMot2\src\net\mormot.net.server.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1918"/>
+        <CursorPos X="82" Y="1942"/>
+        <UsageCount Value="73"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\packages\fcl-db\src\base\db.pas"/>
+        <UnitName Value="DB"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="94"/>
+        <CursorPos Y="106"/>
+        <UsageCount Value="11"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\ide\lazarus.pp"/>
+        <UnitName Value="Lazarus"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="135"/>
+        <CursorPos X="57" Y="152"/>
+        <UsageCount Value="48"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="components\Indy10\System\IdStackBSDBase.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="337"/>
+        <CursorPos X="15" Y="354"/>
+        <UsageCount Value="13"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="components\mORMot2\src\core\mormot.core.variants.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="524"/>
+        <CursorPos X="5" Y="541"/>
+        <UsageCount Value="51"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\x64.inc"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="101"/>
+        <CursorPos Y="120"/>
+        <UsageCount Value="26"/>
+        <Loaded Value="True"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <EditorIndex Value="17"/>
+        <TopLine Value="7740"/>
+        <CursorPos X="93" Y="7760"/>
+        <UsageCount Value="45"/>
+        <Bookmarks Count="3">
+          <Item0 X="35" Y="10395" ID="4"/>
+          <Item1 X="37" Y="10776" ID="6"/>
+          <Item2 X="37" Y="10803" ID="7"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSUtils.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="43"/>
+        <CursorPos X="3" Y="26"/>
+        <UsageCount Value="4"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\Uni.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3284"/>
+        <CursorPos Y="3311"/>
+        <UsageCount Value="6"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\CRConnectionString.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="495"/>
+        <CursorPos X="82" Y="520"/>
+        <UsageCount Value="43"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1622"/>
+        <CursorPos X="14" Y="1639"/>
+        <UsageCount Value="42"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\lcl\actnlist.pas"/>
+        <UnitName Value="ActnList"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="3" Y="73"/>
+        <UsageCount Value="28"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSCompiler.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8720"/>
+        <CursorPos X="61" Y="8753"/>
+        <UsageCount Value="33"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="D:\GitHub\pascalscript\Source\PascalScript.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="139" Y="12"/>
+        <UsageCount Value="18"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\PascalScript.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="54" Y="18"/>
+        <UsageCount Value="7"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="Demo\clientdemo_fpc\miniclient_d.lpr"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="2" Y="13"/>
+        <UsageCount Value="10"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="DataPackageUnit.pas"/>
+        <EditorIndex Value="15"/>
+        <CursorPos X="54" Y="15"/>
+        <UsageCount Value="18"/>
+        <Loaded Value="True"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\packages\paszlib\src\zipper.pp"/>
+        <UnitName Value="Zipper"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="471"/>
+        <CursorPos X="14" Y="489"/>
+        <UsageCount Value="12"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\rtl\objpas\sysutils\filutilh.inc"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="4"/>
+        <CursorPos X="29" Y="5"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\rtl\unix\sysutils.pp"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="447"/>
+        <CursorPos X="8" Y="454"/>
+        <UsageCount Value="15"/>
+        <Loaded Value="True"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\rtl\linux\ptypes.inc"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="28"/>
+        <CursorPos X="41" Y="33"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\ideintf\propedits.pp"/>
+        <UnitName Value="PropEdits"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8212"/>
+        <CursorPos X="44" Y="8224"/>
+        <UsageCount Value="11"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSC_classes.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="183"/>
+        <CursorPos X="3" Y="185"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="202"/>
+        <CursorPos Y="244"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\rtl\objpas\classes\streams.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="538"/>
+        <CursorPos X="3" Y="553"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit54>
+      <Unit55>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\rtl\inc\objpas.inc"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="323"/>
+        <CursorPos X="9" Y="325"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="D:\fpcupdeluxe226\fpcsrc\rtl\objpas\classes\classesh.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="1005"/>
+        <CursorPos X="49" Y="1032"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit56>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+        <Caret Line="408" Column="62" TopLine="386"/>
+      </Position1>
+      <Position2>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+        <Caret Line="392" Column="29" TopLine="387"/>
+      </Position2>
+      <Position3>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+        <Caret Line="17" Column="35"/>
+      </Position3>
+      <Position4>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2214" Column="26" TopLine="2179"/>
+      </Position4>
+      <Position5>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+        <Caret Line="257" Column="25" TopLine="246"/>
+      </Position5>
+      <Position6>
+        <Filename Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+      </Position6>
+      <Position7>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2224" Column="12" TopLine="2190"/>
+      </Position7>
+      <Position8>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2219" TopLine="2191"/>
+      </Position8>
+      <Position9>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2223" TopLine="2191"/>
+      </Position9>
+      <Position10>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2215" Column="19" TopLine="2191"/>
+      </Position10>
+      <Position11>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2219" TopLine="2191"/>
+      </Position11>
+      <Position12>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="164" Column="35" TopLine="153"/>
+      </Position12>
+      <Position13>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="82" Column="11" TopLine="37"/>
+      </Position13>
+      <Position14>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2175" Column="5" TopLine="2175"/>
+      </Position14>
+      <Position15>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2189" Column="43" TopLine="2174"/>
+      </Position15>
+      <Position16>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="161" Column="62" TopLine="125"/>
+      </Position16>
+      <Position17>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="712" Column="3" TopLine="707"/>
+      </Position17>
+      <Position18>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="161" Column="31" TopLine="140"/>
+      </Position18>
+      <Position19>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="709" Column="36" TopLine="707"/>
+      </Position19>
+      <Position20>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="160" Column="68" TopLine="158"/>
+      </Position20>
+      <Position21>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="711" Column="3" TopLine="700"/>
+      </Position21>
+      <Position22>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="161" Column="82" TopLine="140"/>
+      </Position22>
+      <Position23>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="713" Column="17" TopLine="707"/>
+      </Position23>
+      <Position24>
+        <Filename Value="miniscriptcontroller.pas"/>
+        <Caret Line="159" Column="14" TopLine="140"/>
+      </Position24>
+      <Position25>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="2185" Column="30" TopLine="2177"/>
+      </Position25>
+      <Position26>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="353" Column="56" TopLine="325"/>
+      </Position26>
+      <Position27>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="722" Column="21" TopLine="695"/>
+      </Position27>
+      <Position28>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="721" Column="46" TopLine="684"/>
+      </Position28>
+      <Position29>
+        <Filename Value="miniregister.pas"/>
+      </Position29>
+      <Position30>
+        <Filename Value="miniregister.pas"/>
+        <Caret Line="353" Column="50" TopLine="315"/>
+      </Position30>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default"/>
+    </RunParams>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="PubSysUnit.pas"/>
+        <Line Value="736"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="PubSysUnit.pas"/>
+        <Line Value="748"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="PubSysUnit.pas"/>
+        <Line Value="758"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="minihttp.pas"/>
+        <Line Value="589"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="lazmainunit.pas"/>
+        <Line Value="42"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10395"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10560"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10849"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10877"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10941"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10988"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="7898"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="7907"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="8567"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="8577"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSRuntime.pas"/>
+        <Line Value="10588"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSCompiler.pas"/>
+        <Line Value="12920"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="minidb.pas"/>
+        <Line Value="170"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="miniscriptcontroller.pas"/>
+        <Line Value="3076"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="mormothttps.pas"/>
+        <Line Value="1185"/>
+      </Item>
+      <Item>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="D:\fpcupdeluxe226\lazarus\components\PascalScript\Source\uPSR_classes.pas"/>
+        <Line Value="242"/>
+      </Item>
+    </BreakPoints>
+  </Debugging>
+</CONFIG>

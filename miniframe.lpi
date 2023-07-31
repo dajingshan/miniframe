@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="12"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <Title Value="miniframe"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
+    </RunParams>
+    <RequiredPackages Count="5">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="unidac10"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="liteprovider10"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="pascalscript"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="LCL"/>
+      </Item5>
+    </RequiredPackages>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="miniframe.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="minidb.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="miniregister.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="lazmainunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="lazmain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit3>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="miniframe"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\sqlite3;D:\GitHub\pascalscript\Source\"/>
+      <OtherUnitFiles Value="components\mORMot2\src;components\mORMot2\src\net;components\mORMot2\src\core;components\mORMot2\src\crypt;components\mORMot2\src\db;components\mORMot2\src\lib;components\mORMot2\src\rest;components\mORMot2\src\orm;components\mORMot2\src\soa;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\ODBC;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\MySQL;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLServer;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLite;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\Oracle;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\sqlite3;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Lib\Lazarus1\x86_64-win64;components\Indy10\Protocols;components\Indy10\Core;components\Indy10\System;D:\lazarus2.26\components\images\;components\superobject;components\x-superobject"/>
+      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+        <UseHeaptrc Value="True"/>
+      </Debugging>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="11">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+      <Item4>
+        <Name Value="Exception"/>
+      </Item4>
+      <Item5>
+        <Name Value="ETDSError"/>
+      </Item5>
+      <Item6>
+        <Name Value="EUniError"/>
+      </Item6>
+      <Item7>
+        <Name Value="EConvertError"/>
+      </Item7>
+      <Item8>
+        <Name Value="EDocVariant"/>
+      </Item8>
+      <Item9>
+        <Name Value="EMySqlException"/>
+      </Item9>
+      <Item10>
+        <Name Value="EMyError"/>
+      </Item10>
+      <Item11>
+        <Name Value="EAccessViolation"/>
+      </Item11>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

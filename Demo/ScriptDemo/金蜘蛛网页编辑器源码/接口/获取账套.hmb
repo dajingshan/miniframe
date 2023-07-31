@@ -1,0 +1,49 @@
+﻿"classname=TRectangle,name=rtBackGround,width=1024,height=1024,top=0,left=58,ALIGN=1,Version=8.5,Repeat_Image=0,IsCenter=0,ImageWrapMode=0,HTML_Repeat_Image=0,HTML_IsCenter=0,HTML_ImageWrapMode=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=2,SIDE-COLOR=#E8E7E7,SIDE-TYPE=1,color2=#A52A2A,color3=#FF7F50,ColorCreator=0,htmlcolor=#FFFFFF,htmlcolor2=#FF00FF,htmlcolor3=#FF0000,htmlColorCreator=0,PosSizeWidth=1024,PosSizeHeight=1024,NoPublish=0,NoCssFile=1,NoBackgroup=1,NoSysHtmlTag=1,Opacity=1,Shadow_Stroke_Thickness=0,Shadow_Stroke_Color=#E8E7E7","parent=rtBackGround,classname=TmTextarea,name=Textarea_817169,width=436.5,height=206,top=0,left=0,position=0,display=0,float=0,PosSizeY=0,PosSizeX=0,PosSizeWidth=436.5,PosSizeHeight=206,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=0,b_XRadius=5,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,RadiusPoses=0123,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,""Text=<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  mds: THjhMemoryDataSet;
+  ErrStr, Path, ztdefault: string;
+  json: TminiJson;
+  SL: TStringlist;
+%>
+<%
+begin
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO; //初始化JSON
+  Path := ProgramPath + 'setting\confmx.json';
+  mds := Pub.GetDs;
+  ErrStr := DBMemory_LoadJson(mds, Path); //把账套数据读到内存数据mds中
+  if trim(ErrStr) <> '' then 
+  begin
+    json.S['retcode'] := '100';
+    json.S['retmsg'] := ErrStr;
+    json.S['data'] := '';
+    exit;
+  end;
+  
+  SL := Pub.GetSL;
+  ztdefault := '';
+  mds.First;
+  while not mds.eof do 
+  begin
+    if (mds.V('zthide') <> 'on') and (mds.V('ztstop') <> 'on') then //过滤掉隐藏和停用的的账套
+      Sl.add(mds.V('ztcode') + '--' + mds.V('ztname')); //输出账套编码和名称
+    
+    if mds.V('ztdefault') = 'on' then 
+      ztdefault := mds.V('ztname');
+    
+    mds.Next;
+  end;
+  
+  json.S['retcode'] := '200';
+  json.S['retmsg'] := 'ok';
+  json.S['ztdefault'] := ztdefault;
+  json.S['data'] := SL.CommaText;
+  
+  print(json.AsJson(true)); //以JSON输出
+end;
+%>"",EditTypeHtmlTag=0,NoParseHTML=0,FONT-SIZE=12,ALIGN-H=1,ALIGN-V=1,TextareaTypeHtmlTag=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#EEEAEA,SIDE-TYPE=1",IsMobile=1

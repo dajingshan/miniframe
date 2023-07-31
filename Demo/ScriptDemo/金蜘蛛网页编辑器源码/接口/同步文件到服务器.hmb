@@ -1,0 +1,182 @@
+﻿"classname=TRectangle,name=rtBackGround,width=1024,height=1024,top=0,left=79.5,ALIGN=1,Version=8.5,Repeat_Image=0,IsCenter=0,ImageWrapMode=0,HTML_Repeat_Image=0,HTML_IsCenter=0,HTML_ImageWrapMode=0,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=2,SIDE-COLOR=#E8E7E7,SIDE-TYPE=1,color2=#A52A2A,color3=#FF7F50,ColorCreator=0,htmlcolor=#FFFFFF,htmlcolor2=#FF00FF,htmlcolor3=#FF0000,htmlColorCreator=0,PosSizeWidth=1024,PosSizeHeight=1024,NoPublish=0,NoCssFile=1,NoBackgroup=1,NoSysHtmlTag=1,Opacity=1,Shadow_Stroke_Thickness=0,Shadow_Stroke_Color=#E8E7E7","parent=rtBackGround,classname=TmTextarea,name=Textarea_817169,width=847,height=730,top=0,left=0,position=0,display=0,float=0,PosSizeY=0,PosSizeX=0,PosSizeWidth=847,PosSizeHeight=730,HTML_MUSTID=0,HTML_MUSTNAME=0,UseMbProperty=1,Transparent=0,ALIGN=1,AVisibled=0,b_XRadius=5,Anchors=01,AAction_Hover_Stroke_Thickness=0,AAction_Hover_Stroke_Color=#E8E7E7,AAction_Focus_Stroke_Thickness=0,AAction_Focus_Stroke_Color=#E8E7E7,Opacity=1,RadiusPoses=0123,Repeat_Image=0,IsCenter=0,ImageWrapMode=2,ImageHtmlTag=0,""Text=<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  ToPath, RelativePath, FileName, OldPath, ErrStr, TmpPath: string;
+  Json: TminiJson;
+  Ms: TMemoryStream;
+  Fs: TFileStream;
+  lp: integer;
+function GetOneDirFileInfo(Json: TminiJson; Path: string): string;
+var
+  Status: Integer;
+  SearchRec: TSearchRec;
+  json_sub: TminiJson;
+begin
+  Path := PathWithSlash(Path);
+  SearchRec := TSearchRec.Create;
+  Status := FindFirst(Path + '*.*', faAnyFile, SearchRec);
+  try
+    while Status = 0 do
+    begin 
+      if SearchRec.Attr and faDirectory = faDirectory then
+      begin
+        if (SearchRec.name <> '.') and (SearchRec.name <> '..') then
+        begin
+          FileName := Path + SearchRec.Name;
+          json_sub := Pub.GetJson;  
+          json_sub.SO; //初始化 或 json.Init;    
+          json_sub.S['isdir'] := '1';
+          json_sub.S['filename'] := FileName;
+          json_sub.S['RelativePath'] := GetDeliBack(FileName, OldPath);
+          json_sub.S['FileTime'] := '';
+          json_sub.I['size'] := 0;
+          json.A['list'] := json_sub; 
+          
+          GetOneDirFileInfo(Json, Path + SearchRec.Name + '\');
+        end;
+      end else
+      begin
+        FileName := Path + SearchRec.Name;
+        try
+          if FileExists(FileName) then
+          begin 
+            json_sub := Pub.GetJson;  
+            json_sub.SO; //初始化 或 json.Init;    
+            json_sub.S['isdir'] := '0';
+            json_sub.S['filename'] := SearchRec.name;
+            json_sub.S['RelativePath'] := GetDeliBack(FileName, OldPath);
+            json_sub.S['FileTime'] := FileGetFileTimeA(FileName);
+            json_sub.I['size'] := SearchRec.Size;
+            json.A['list'] := json_sub;
+          end;
+        except
+          //print(ExceptionParam)
+        end;//}
+      end; 
+      Status := FindNext(SearchRec);
+    end;
+  finally
+    FindClose(SearchRec);
+    SearchRec.Free;
+  end;//*) 
+end;
+%>
+<%
+begin
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO;
+  json.S['retcode'] := '100';
+  
+  ToPath := 'D:\同步测试\服务上';
+  {// 验证是否登录代码
+  if not Request.IsLogin('Logined') then
+  begin 
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '你还没有登录(no logined)！'; 
+    print(json.AsJson(true));
+    exit; 
+  end;//} 
+
+  ToPath := PathWithSlash(ToPath);
+  OldPath := ToPath;
+  RelativePath := Request.V('fn');
+  TmpPath := FileGetTemporaryPath;
+  FileName := TmpPath + RelativePath;
+  if Request.V('opr') = '1' then
+  begin //获取服务上指定目录的文件信息
+    json.S['retcode'] := '200'; 
+    json.S['retmsg'] := '获取文件表成功！';
+    GetOneDirFileInfo(Json, OldPath);
+    print(json.AsJson(true)); 
+  end else
+  if Request.V('opr') = '2' then
+  begin //删除文件
+    DeleteFile(ToPath + RelativePath);
+    json.S['retcode'] := '200'; 
+    json.S['retmsg'] := '文件【' + RelativePath + '】已删除!'; 
+    print(json.AsJson(true));
+  end else 
+  if Request.V('opr') = '6' then //判断是否已存在文件，续点传输
+  begin
+    
+    if FileExists(FileName) then
+    begin
+      json.S['retcode'] := '210';
+      json.S['retmsg'] := '文件【' + RelativePath + '】已存在!'; 
+    end else
+    begin
+      json.S['retcode'] := '200'; 
+      json.S['retmsg'] := '文件【' + RelativePath + '】不存在!';
+    end;
+    print(json.AsJson(true)); 
+  end else
+  if (Request.V('opr') = '3') or (Request.V('opr') = '5') then
+  begin //接收上传文件
+    Request.PostStream.Position := 0;
+    ForceDirectories(ExtractFilePath(FileName));
+    Request.PostStream.Savetofile(FileName);
+    if lastError <> '' then 
+    begin
+      json.S['retmsg'] := lastError;
+      print(json.AsJson(true));  
+      exit;  
+    end;
+    
+    if (Request.V('isend') = '1') then
+    begin                                                   
+      //json.S['retmsg'] := Request.V('Num') + '===' + ToPath + Request.V('newfn');
+      //print(json.AsJson(true));  
+      //exit;
+      Ms := Pub.GetMs;
+      FileName := ToPath + Request.V('oldfn');
+      DeleteFile(FileName);
+      //Fs := TFileStream.Create(FileName, fmCreate);
+      Fs := Pub.GetFS(FileName, fmCreate, ErrStr);
+      if trim(ErrStr) <> '' then 
+      begin
+        json.S['retmsg'] := ErrStr;
+        print(json.AsJson(true));  
+        exit;
+      end;
+      try  
+        for lp := 1 to StrToInt(Request.V('Num')) do
+        begin
+          Ms.Clear;
+          Ms.LoadFromFile(TmpPath + Request.V('newfn') + IntToStr(lp));
+          Ms.Position := 0;
+          Fs.CopyFrom(Ms, Ms.Size);
+          //}  
+          DeleteFile(TmpPath + Request.V('newfn') + IntToStr(lp));
+        end;
+      finally
+        FS.Free;
+      end; 
+    end;
+    
+    //修改文件时间 filetime       
+    if (Request.V('opr') = '3') or (Request.V('opr') = '5') and (Request.V('isend') = '1') then
+      FileChangeFileDate(FileName, Request.V('filetime'));
+    json.S['retcode'] := '200'; 
+    json.S['retmsg'] := '文件【' + RelativePath + '】已保存至服务器上!'; 
+    print(json.AsJson(true));
+  end else
+  if Request.V('opr') = '4' then
+  begin //删除文件夹
+    RemoveDir(ToPath + RelativePath);
+    json.S['retcode'] := '200'; 
+    json.S['retmsg'] := '文件【' + RelativePath + '】已删除!'; 
+    print(json.AsJson(true));
+  end else 
+  begin
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '调用参数不正确！';
+    print(json.AsJson(true));
+    exit;  
+  end;
+end;
+%>"",EditTypeHtmlTag=0,NoParseHTML=0,FONT-SIZE=12,ALIGN-H=1,ALIGN-V=1,TextareaTypeHtmlTag=1,SIDE-LEFT=1,SIDE-TOP=1,SIDE-RIGHT=1,SIDE-BOTTOM=1,SIDE-SIZE=1,SIDE-COLOR=#EEEAEA,SIDE-TYPE=1",IsMobile=1

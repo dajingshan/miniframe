@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899-12-30 00:00:00.000.712,D:\code\laz\server\minidemo\Unit1.pas=D:\code\laz\server\minidemo\MainUnit.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.348,=D:\code\laz\server\minidemo\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.104,=D:\code\laz\server\minidemo\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.238,=D:\code\laz\server\minidemo\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.015,C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Project14.dproj=D:\code\laz\server\minidemo\miniclient.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.196,D:\code\laz\server\minidemo\Unit1.pas=D:\code\laz\server\minidemo\baseformUnit.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.143,D:\code\laz\server\minidemo\Unit1.pas=D:\code\laz\server\minidemo\connparams.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.100,=D:\code\laz\server\minidemo\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.191,=D:\code\laz\server\minidemo\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.213,D:\code\laz\server\minidemo\clientpub.pas=D:\code\laz\server\minidemo\Unit1.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.538,D:\code\laz\server\minidemo\miniclient_d.dproj=D:\code\laz\server\minidemo\miniclient.dproj</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.120,C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Unit12.pas=D:\code\laz\server\minidemo\LoginUnit.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.282,=C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Unit12.pas</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.120,C:\Users\Administrator\Documents\Embarcadero\Studio\Projects\Unit12.dfm=D:\code\laz\server\minidemo\LoginUnit.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.143,D:\code\laz\server\minidemo\Unit1.dfm=D:\code\laz\server\minidemo\connparams.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.713,D:\code\laz\server\minidemo\Unit1.dfm=D:\code\laz\server\minidemo\MainUnit.dfm</Transaction>
+    <Transaction>1899-12-30 00:00:00.000.196,D:\code\laz\server\minidemo\Unit1.dfm=D:\code\laz\server\minidemo\baseformUnit.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

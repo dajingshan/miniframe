@@ -19,6 +19,6 @@ Demo(全源码)实现了程序“升级更新”（把文件压缩后下载）�
 Delphi和lazarus编译后的程序互通。即Ｄｅｌｐｈｉ编译的服务端与lazarus编译的客户端能通讯，lazarus编译的服务端与Delphi编译的客户端能通讯。见Demo。<br><br>
 
 <b>用它能干什么？</b><br></font><br>
-开发网站，如http://wyedotor.com   就是用它开发的。<br><br>
+开发网站，如https://wyedotor.com   就是用它开发的。<br><br>
 开发接口，为前后端分离的HTML应用（vue、React、微信小程序、支付宝小程序等）提供后端数据服务支持。<br><br>
 开发接口，为Ｄｅｌｐｈｉ或lazarus开发的客户端提供后端数据服务，这些客户端包括windows、linux、IOS、android等。<br><br>

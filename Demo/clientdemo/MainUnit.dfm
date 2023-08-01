@@ -1569,7 +1569,6 @@ inherited MainForm: TMainForm
       ParentBackground = False
       TabOrder = 1
       OnMouseDown = plTopBarMouseDown
-      ExplicitTop = 20
       object Label25: TLabel
         Left = 16
         Top = 7
@@ -1613,7 +1612,6 @@ inherited MainForm: TMainForm
         ParentColor = True
         TabOrder = 1
         OnMouseDown = plTopBarMouseDown
-        ExplicitLeft = 12
         object Image10: TImage
           Left = 0
           Top = 0
@@ -1710,7 +1708,6 @@ inherited MainForm: TMainForm
         ParentColor = True
         TabOrder = 2
         OnMouseDown = plTopBarMouseDown
-        ExplicitLeft = 48
         object Image11: TImage
           Left = 0
           Top = 0
@@ -1807,7 +1804,6 @@ inherited MainForm: TMainForm
         ParentColor = True
         TabOrder = 3
         OnMouseDown = plTopBarMouseDown
-        ExplicitLeft = 1290
         object Image12: TImage
           Left = 0
           Top = 0
@@ -1937,7 +1933,7 @@ inherited MainForm: TMainForm
           Align = alBottom
           Alignment = taCenter
           AutoSize = False
-          Caption = #21516#27493#19979#36733'-'#20998#22359#26029#28857
+          Caption = #21516#27493#19979#36733'-'#20998#22359#32493#28857
           Font.Charset = DEFAULT_CHARSET
           Font.Color = clWhite
           Font.Height = -13

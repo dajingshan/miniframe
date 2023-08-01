@@ -1,5 +1,6 @@
 <b><font color=red>QQ技术群：821855479 如果加不了群，请联系QQ：3123827806</font></b><br><br>
 
+官方主页：https://www.wyeditor.com/miniframe/<br><br>
 源码及demo下载：https://www.wyeditor.com/files/miniframe.rar<br><br>
 编译及运行环境配置：https://www.wyeditor.com/miniframe/miniframesetup.html<br><br>
 

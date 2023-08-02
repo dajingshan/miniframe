@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, baseformUnit, clientpub, HuoPubFuncUnit,
-  LoginUnit, PubstringUnit, Vcl.ExtCtrls, acPNG;
+  LoginUnit, PubstringUnit, Vcl.ExtCtrls, acPNG, dxGDIPlusClasses;
 
 type
   Tconnparam = class(Tbaseform)

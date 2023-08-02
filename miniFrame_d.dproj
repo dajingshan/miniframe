@@ -106,10 +106,9 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
-        <DCC_UnitSearchPath>components\mORMot2\src;components\mORMot2\src\net;components\mORMot2\src\core;components\mORMot2\src\crypt;components\mORMot2\src\db;components\mORMot2\src\lib;components\mORMot2\src\rest;components\mORMot2\src\orm;components\mORMot2\src\soa;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\ODBC;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\MySQL;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLServer;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLite;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\Oracle;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\sqlite3;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Lib\Lazarus1\x86_64-win64;components\Indy10\Protocols;components\Indy10\Core;components\Indy10\System;components\pascalscript\Source;components\superobject;components\x-superobject;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>components\mORMot2\src;components\mORMot2\src\net;components\mORMot2\src\core;components\mORMot2\src\crypt;components\mORMot2\src\db;components\mORMot2\src\lib;components\mORMot2\src\rest;components\mORMot2\src\orm;components\mORMot2\src\soa;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\ODBC;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\MySQL;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLServer;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLite;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\Oracle;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\sqlite3;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Lib\Lazarus1\x86_64-win64;components\Indy10\Protocols;components\Indy10\Core;components\Indy10\System;components\pascalscript\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>(None)</Manifest_File>
-        <DCC_Define>PS_BTSTRINGNATIVE1;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -125,10 +124,10 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
-        <DCC_UnitSearchPath>components\mORMot2\src;components\mORMot2\src\net;components\mORMot2\src\core;components\mORMot2\src\crypt;components\mORMot2\src\db;components\mORMot2\src\lib;components\mORMot2\src\rest;components\mORMot2\src\orm;components\mORMot2\src\soa;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\ODBC;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\MySQL;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLServer;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLite;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\Oracle;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\sqlite3;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Lib\Lazarus1\x86_64-win64;components\Indy10\Protocols;components\Indy10\Core;components\Indy10\System;components\pascalscript\Source;components\superobject;components\x-superobject;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>components\mORMot2\src;components\mORMot2\src\net;components\mORMot2\src\core;components\mORMot2\src\crypt;components\mORMot2\src\db;components\mORMot2\src\lib;components\mORMot2\src\rest;components\mORMot2\src\orm;components\mORMot2\src\soa;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\ODBC;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\MySQL;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLServer;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\TDS;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\SQLite;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\UniProviders\Oracle;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Source\sqlite3;components\unidac_9.2.1(fpc3.3.1)\unidac_9.2.1\Lib\Lazarus1\x86_64-win64;components\Indy10\Protocols;components\Indy10\Core;components\Indy10\System;components\pascalscript\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Manifest_File>(None)</Manifest_File>
-        <DCC_Define>NEED_FORMATSETTINGS;PS_BTSTRINGNATIVE;corp1;htmleditor1;$(DCC_Define)</DCC_Define>
+        <DCC_Define>corp1;$(DCC_Define)</DCC_Define>
     </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
@@ -171,6 +170,12 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="3">
+                <DeployFile LocalName="Win32\Debug\miniFrame_d.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>miniFrame_d.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="Win64\Debug\miniFrame_d.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
                         <RemoteName>miniFrame_d.exe</RemoteName>
@@ -180,12 +185,6 @@
                 <DeployFile LocalName="Win64\Debug\miniFrame_d.rsm" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win64">
                         <RemoteName>miniFrame_d.rsm</RemoteName>
-                        <Overwrite>true</Overwrite>
-                    </Platform>
-                </DeployFile>
-                <DeployFile LocalName="Win32\Debug\miniFrame_d.exe" Configuration="Debug" Class="ProjectOutput">
-                    <Platform Name="Win32">
-                        <RemoteName>miniFrame_d.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -990,10 +989,10 @@
                 </DeployClass>
                 <ProjectRoot Platform="OSX32" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="OSX64" Name="$(PROJECTNAME).app"/>
-                <ProjectRoot Platform="Android64" Name="$(PROJECTNAME)"/>
-                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME).app"/>
-                <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Win32" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Android64" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="Android" Name="$(PROJECTNAME)"/>
+                <ProjectRoot Platform="OSXARM64" Name="$(PROJECTNAME).app"/>
                 <ProjectRoot Platform="Win64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="Linux64" Name="$(PROJECTNAME)"/>
                 <ProjectRoot Platform="iOSDevice32" Name="$(PROJECTNAME).app"/>

@@ -23,3 +23,5 @@ Delphi和lazarus编译后的程序互通。即Ｄｅｌｐｈｉ编译的服务�
 开发网站，如https://wyeditor.com   就是用它开发的。<br><br>
 开发接口，为前后端分离的HTML应用（vue、React、微信小程序、支付宝小程序等）提供后端数据服务支持。<br><br>
 开发接口，为Ｄｅｌｐｈｉ或lazarus开发的客户端提供后端数据服务，这些客户端包括windows、linux、IOS、android等。<br><br>
+<b>更新记录</b><br></font><br>
+2023-08-03 V1.51 1.改进demo中的文件续点上传、续点下载。2.脚本引擎中获取文件大小由原integer改为int64<br><br>

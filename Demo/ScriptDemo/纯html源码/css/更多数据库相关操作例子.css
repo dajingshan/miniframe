@@ -1,0 +1,20 @@
+﻿/******<<>>（https://www.wyeditor.com，免费软件欢迎下载使用） 样式文件*******/
+html, body{margin:0cm;padding:0cm;height: 100%;width:100%}
+a{color:#000000;text-decoration:none }  
+a:visited{COLOR:#000000;TEXT-DECORATION:none }  
+a:active{color:#000000;text-decoration:none }  
+a:hover{color:#000000;text-decoration:underline }  
+
+.text_90567 {
+position:relative !important;
+z-index:0;
+left:55px;
+height:30px;
+outline: 0;
+background-color: transparent;
+font-size: 14px;
+text-align: justify;box-sizing:border-box
+}
+
+.text_tb{overflow-x:hidden;overflow-y:hidden;display: table}
+.text_90567_b{text-align: justify;display: table-cell;vertical-align: middle}

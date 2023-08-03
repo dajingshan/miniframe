@@ -1,0 +1,126 @@
+﻿/******<<>>（https://www.wyeditor.com，免费软件欢迎下载使用） 样式文件*******/
+html, body{margin:0cm;padding:0cm;height: 100%;width:100%}
+a{color:#000000;text-decoration:none }  
+a:visited{COLOR:#000000;TEXT-DECORATION:none }  
+a:active{color:#000000;text-decoration:none }  
+a:hover{color:#000000;text-decoration:underline }  
+
+.Textarea_817169 {
+position:absolute !important;
+z-index:0;
+left:123px;
+width:436.5px;
+top:0px;
+height:206px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #EEEAEA;border-radius: 5px;box-sizing:border-box;visibility:hidden!important
+}
+
+.mainbody {
+position:relative !important;
+z-index:0;
+overflow:hidden;
+left: 50%; 
+width:784px;
+margin-left: -392px; 
+height:659px;
+outline: 0;
+background-color: #FFFFFF;
+border:0px;box-sizing:border-box;margin-top: 0px
+}
+
+.myanimmainbody{display:inline-block;-webkit-animation-duration:3s;animation-duration:3s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+.info {
+position:relative !important;
+z-index:0;
+width:100%;
+outline: 0;
+background-color: transparent;
+font-size: 20px;
+color: #FF0000;
+box-sizing:border-box;margin-top: 30px
+}
+
+.myaniminfo{display:inline-block;-webkit-animation-duration:3s;animation-duration:3s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+.text_1 {
+position:relative !important;
+z-index:0;
+left: 50%; 
+width:150px;
+margin-left: -75px; 
+outline: 0;
+background-color: transparent;
+font-size: 18px;
+color: #0000FF;
+text-align: center;box-sizing:border-box;margin-top: 50px
+}
+
+.text_tb{overflow-x:hidden;overflow-y:hidden;display: table}
+.myanimtext_1{display:inline-block;-webkit-animation-duration:3s;animation-duration:3s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+@-webkit-keyframes
+ super-lubit{from{-webkit-transform:translate3d(-40px,-40px,0);opacity:.2}to{-webkit-transform:translate3d(0,0,0);opacity:1}}@keyframes  
+ super-lubit{from{transform:translate3d(-40px,-40px,0);opacity:.2}to{transform:translate3d(0,0,0);opacity:1}} 
+ .anim-lubit{-webkit-animation-name:super-lubit;animation-name:super-lubit}  
+
+.text_1_b{text-align: center;display: table-cell;vertical-align: middle}
+.text_987615 {
+position:relative !important;
+z-index:0;
+left: 50%; 
+width:150px;
+margin-left: -75px; 
+outline: 0;
+background-color: transparent;
+font-size: 18px;
+color: #0000FF;
+text-align: center;box-sizing:border-box;margin-top: 10px
+}
+
+.myanimtext_987615{display:inline-block;-webkit-animation-duration:3s;animation-duration:3s;-webkit-animation-fill-mode:both;animation-fill-mode:both}
+.text_987615_b{text-align: center;display: table-cell;vertical-align: middle}
+.img_663778 {
+position:relative !important;
+z-index:0;
+left: 50%; 
+width:664px;
+margin-left: -332px; 
+height:418px;
+outline: 0;
+box-sizing:border-box;margin-top: 50px
+}
+
+.img_663778_img {
+position:relative !important;
+z-index:0;
+text-align:middle;
+left: 0px;
+width:664px;
+top: 0px;
+height:418px;
+outline: 0;
+font-family: "宋体";
+font-size: 14px;
+border:0px;box-sizing:border-box
+}
+
+@media screen and (min-width: 0px) and (max-width: 768px){ 
+.mainbody {
+  width:100%;
+  left:0!important;
+  margin-left:0!important;
+  left:0px;
+}
+} 
+
+@media screen and (min-width: 768px) and (max-width: 1024px){ 
+.mainbody {
+  width:100%;
+  left:0!important;
+  margin-left:0!important;
+  left:0px;
+}
+} 
+

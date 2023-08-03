@@ -1,0 +1,214 @@
+﻿/******<<>>（https://www.wyeditor.com，免费软件欢迎下载使用） 样式文件*******/
+html, body{margin:0cm;padding:0cm;height: 100%;width:100%}
+a{color:#000000;text-decoration:none }  
+a:visited{COLOR:#000000;TEXT-DECORATION:none }  
+a:active{color:#000000;text-decoration:none }  
+a:hover{color:#000000;text-decoration:underline }  
+
+.Textarea_817169 {
+position:absolute !important;
+z-index:0;
+left:0px;
+width:436.5px;
+top:0px;
+height:206px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #EEEAEA;border-radius: 5px;box-sizing:border-box;visibility:hidden!important
+}
+
+.text_494992 {
+position:relative !important;
+z-index:0;
+width:100%;
+height:83px;
+outline: 0;
+background-color: transparent;
+font-size: 18px;
+color: #FF0000;
+text-align: justify;box-sizing:border-box;margin-top: 10px
+}
+
+.div_544257 {
+position:relative !important;
+z-index:0;
+overflow:hidden;
+left: 50%; 
+width:784px;
+margin-left: -392px; 
+height:426px;
+outline: 0;
+background-color: #EFFAFC;
+border: 1px solid #F2F2F2;box-sizing:border-box
+}
+
+.Form_465294 {
+position:relative !important;
+z-index:0;
+overflow:hidden;
+left:10px;
+width:739px;
+height:408px;
+outline: 0;
+background-color: #FFFFFF;
+border: 1px solid #F2F2F2;box-sizing:border-box
+}
+
+.text_4 {
+position:absolute !important;
+z-index:0;
+left:38px;
+width:54px;
+top:18px;
+height:30px;
+outline: 0;
+background-color: transparent;
+font-size: 14px;
+text-align: justify;box-sizing:border-box
+}
+
+.text_tb{overflow-x:hidden;overflow-y:hidden;display: table}
+.text_4_b{text-align: justify;display: table-cell;vertical-align: middle}
+.id {
+position:absolute !important;
+z-index:0;
+text-align:middle;
+left:99px;
+width:352px;
+top:19px;
+height:25px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #EEEAEA;border-radius: 5px;box-sizing:border-box
+}
+
+.text_981696 {
+position:absolute !important;
+z-index:0;
+left:37px;
+width:54px;
+top:58px;
+height:30px;
+outline: 0;
+background-color: transparent;
+font-size: 14px;
+text-align: justify;box-sizing:border-box
+}
+
+.text_981696_b{text-align: justify;display: table-cell;vertical-align: middle}
+.usercode {
+position:absolute !important;
+z-index:0;
+text-align:middle;
+left:98px;
+width:352px;
+top:59px;
+height:25px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #EEEAEA;border-radius: 5px;box-sizing:border-box
+}
+
+.text_1 {
+position:absolute !important;
+z-index:0;
+left:38px;
+width:54px;
+top:104px;
+height:30px;
+outline: 0;
+background-color: transparent;
+font-size: 14px;
+text-align: justify;box-sizing:border-box
+}
+
+.text_1_b{text-align: justify;display: table-cell;vertical-align: middle}
+.username {
+position:absolute !important;
+z-index:0;
+text-align:middle;
+left:99px;
+width:352px;
+top:105px;
+height:25px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #EEEAEA;border-radius: 5px;box-sizing:border-box
+}
+
+.text_2 {
+position:absolute !important;
+z-index:0;
+left:39px;
+width:54px;
+top:147px;
+height:30px;
+outline: 0;
+background-color: transparent;
+font-size: 14px;
+text-align: justify;box-sizing:border-box
+}
+
+.text_2_b{text-align: justify;display: table-cell;vertical-align: middle}
+.note {
+position:absolute !important;
+z-index:0;
+text-align:middle;
+left:100px;
+width:527px;
+top:148px;
+height:144px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 14px;
+border: 1px solid #EEEAEA;text-align: justify;border-radius: 5px;box-sizing:border-box
+}
+
+ #button_804298:Hover 
+ { 
+ background-color: #FFFFFF !important; outline: 0;transition:all 1s linear;
+
+}
+ #button_804298:focus 
+ { 
+ background-color: #FFFBF0 !important; outline: 0; transition:all 1s linear;
+
+}
+.button_804298 {
+position:absolute !important;
+z-index:0;
+left:647px;
+width:86px;
+top:267px;
+height:24px;
+outline: 0;
+background-color: #F0FFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #FF0000;border-radius: 5px;box-sizing:border-box
+}
+
+.text_326801 {
+position:absolute !important;
+z-index:0;
+left:97px;
+width:575px;
+top:308px;
+height:90px;
+outline: 0;
+background-color: transparent;
+font-size: 14px;
+text-align: justify;box-sizing:border-box
+}
+
+.text_326801_b{text-align: justify;display: table-cell;vertical-align: middle}
+.text_3_b{text-align: justify;display: table-cell;vertical-align: middle}

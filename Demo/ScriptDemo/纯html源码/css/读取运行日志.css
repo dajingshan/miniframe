@@ -1,0 +1,45 @@
+﻿/******<<>>（https://www.wyeditor.com，免费软件欢迎下载使用） 样式文件*******/
+html, body{margin:0cm;padding:0cm;height: 100%;width:100%}
+a{color:#000000;text-decoration:none }  
+a:visited{COLOR:#000000;TEXT-DECORATION:none }  
+a:active{color:#000000;text-decoration:none }  
+a:hover{color:#000000;text-decoration:underline }  
+
+.text_688915 {
+position:relative !important;
+z-index:0;
+width:100%;
+height:30px;
+outline: 0;
+background-color: #30F8EE;
+font-size: 15px;
+color: #008080;
+font-weight: bold;text-align: center;box-sizing:border-box
+}
+
+.text_tb{overflow-x:hidden;overflow-y:hidden;display: table}
+.text_688915_b{font-weight: bold;text-align: center;display: table-cell;vertical-align: middle}
+.Textarea_817169 {
+position:absolute !important;
+z-index:0;
+text-align:middle;
+left:173px;
+width:436.5px;
+top:10px;
+height:206px;
+outline: 0;
+background-color: #FFFFFF;
+font-family: "宋体";
+font-size: 12px;
+border: 1px solid #EEEAEA;border-radius: 5px;box-sizing:border-box;visibility:hidden!important
+}
+
+.ProgramCode_949763 {
+position:relative !important;
+z-index:0;
+width:100%;
+outline: 0;
+background-color: #FFFFFF;
+box-sizing:border-box;overflow:hidden;text-overflow: ellipsis
+}
+

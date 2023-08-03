@@ -1,0 +1,134 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Query: TminiQuery; 
+  json: TminiJson;
+  ErrStr, Sys_DB_SQL, TmpStr, TmpStr2, TmpStr3, OrderFieldName, ztcode: string;
+  lp, Sys_DB_PageCount, Sys_DB_RecordCount, Pn: integer;
+  mds: THjhMemoryDataSet;
+  Mt: TminiMemTable;
+  Ms: TMemoryStream;
+  conn: TminiConnection;
+%>
+<%
+begin
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO;
+  
+  // 验证是否登录代码
+  if not Request.IsLogin('Logined') then
+  begin 
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '你还没有登录(no logined)！'; 
+    print(json.AsJson(true));
+    exit; 
+  end;//} 
+
+  json.S['retcode'] := '100';
+
+  //1.用账套代码连接对应的数据库
+  //if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+  if Request.Session <> nil then //登录时账套代码已保存在Session的ztcode中
+    ztcode := Request.Session.Values['ztcode'];
+  if ztcode = '' then ztcode := Request.V('ztcode'); //也可以直接在URL中加入
+  if not Pub.DB_C(ztcode, ErrStr) then //用账套编码连接数据库
+  begin 
+    json.S['retmsg'] := '数据库连接出错：' + ErrStr; 
+    print(json.AsJson(true));
+    exit; 
+  end;
+  Query := Pub.Query;
+  conn := Pub.Conn;
+
+  Mt := Pub.Getmt;
+  if Request.V('savetype') = '2' then 
+  begin //提交的数据是Json
+    ErrStr := Json2DataSet(Mt, Request.PostedData);
+    if trim(ErrStr) <> '' then 
+    begin
+      json.S['retmsg'] := ErrStr;
+      print(json.AsJson(true));
+      exit;
+    end;
+     
+  end else
+  begin //提交的数据是二进制流，数据已保存在 Request.PostStream 中
+    Request.PostStream.Position := 0;
+    if not Mt.LoadFromStream(Request.PostStream, ErrStr) then 
+    begin
+      json.S['retmsg'] := '加载数据时出错：' + ErrStr; 
+      print(json.AsJson(true));
+      exit; 
+    end;
+  end;
+  
+  //起事务更新
+  if not Conn.StartTrans(ErrStr)  then 
+  begin
+    json.S['retmsg'] := '起事务时出错：' + ErrStr; 
+    print(json.AsJson(true));
+    exit; 
+  end;
+   
+  mt.First;
+  while not mt.Eof do 
+  begin
+    Sys_DB_SQL := '';
+    for lp := 0 to mt.Fields.count - 1 do 
+    begin
+      if (mt.Fields[lp].FieldName <> 'id') and (lowercase(mt.Fields[lp].FieldName) <> 'row_number') then 
+      begin
+        if mt.Fields[lp].DataType in [ftfloat, ftinteger, ftfmtbcd] then 
+        begin
+          if mt.Fields[lp].AsString = '' then 
+            TmpStr := mt.Fields[lp].FieldName + '=null'
+          else
+            TmpStr := mt.Fields[lp].FieldName + '=' + mt.Fields[lp].AsString
+        end else
+          TmpStr := mt.Fields[lp].FieldName + '=' + QuotedStr(mt.Fields[lp].AsString);
+        if Sys_DB_SQL = '' then 
+          Sys_DB_SQL := TmpStr
+        else
+          Sys_DB_SQL := Sys_DB_SQL + ',' + TmpStr;
+      end; 
+    end;
+    Sys_DB_SQL := ' update users set ' + Sys_DB_SQL + ' where id = ' + QuotedStr(mt.FieldByName('id').asstring);
+    if not Query.E(Sys_DB_SQL, ErrStr) then 
+    begin    
+      if not Conn.Rollback(ErrStr) then //出错的话回滚
+      begin 
+        json.S['retmsg'] := '回滚事务时出错：' + ErrStr; 
+        print(json.AsJson(true));
+        exit;
+      end else
+      begin 
+        json.S['retmsg'] := '更新数据时出错：' + ErrStr + Sys_DB_SQL; 
+        print(json.AsJson(true));
+        exit;
+      end 
+    end;
+    mt.next;
+  end;
+  
+  if not Conn.Commit(ErrStr)  then //提交事务
+  begin
+    json.S['retmsg'] := '结束事务时出错：' + ErrStr; 
+    print(json.AsJson(true));
+    exit; 
+  end;
+
+  json.S['retmsg'] := '数据已正确更新！更新记录数为：' + IntToStr(mt.RecordCount); 
+  if Request.V('savetype') = '2' then
+    json.S['retmsg'] := json.S['retmsg'] + ' Json上传数据集更新!'
+  else
+    json.S['retmsg'] := json.S['retmsg'] + ' 二进制流上传数据集更新!';
+  json.I['updatecount'] := mt.RecordCount;
+  json.S['retcode'] := '200';
+  print(json.AsJson(true));    
+end;
+%>

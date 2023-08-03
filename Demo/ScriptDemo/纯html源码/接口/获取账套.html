@@ -1,0 +1,49 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  mds: THjhMemoryDataSet;
+  ErrStr, Path, ztdefault: string;
+  json: TminiJson;
+  SL: TStringlist;
+%>
+<%
+begin
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO; //初始化JSON
+  Path := ProgramPath + 'setting\confmx.json';
+  mds := Pub.GetDs;
+  ErrStr := DBMemory_LoadJson(mds, Path); //把账套数据读到内存数据mds中
+  if trim(ErrStr) <> '' then 
+  begin
+    json.S['retcode'] := '100';
+    json.S['retmsg'] := ErrStr;
+    json.S['data'] := '';
+    exit;
+  end;
+  
+  SL := Pub.GetSL;
+  ztdefault := '';
+  mds.First;
+  while not mds.eof do 
+  begin
+    if (mds.V('zthide') <> 'on') and (mds.V('ztstop') <> 'on') then //过滤掉隐藏和停用的的账套
+      Sl.add(mds.V('ztcode') + '--' + mds.V('ztname')); //输出账套编码和名称
+    
+    if mds.V('ztdefault') = 'on' then 
+      ztdefault := mds.V('ztname');
+    
+    mds.Next;
+  end;
+  
+  json.S['retcode'] := '200';
+  json.S['retmsg'] := 'ok';
+  json.S['ztdefault'] := ztdefault;
+  json.S['data'] := SL.CommaText;
+  
+  print(json.AsJson(true)); //以JSON输出
+end;
+%>

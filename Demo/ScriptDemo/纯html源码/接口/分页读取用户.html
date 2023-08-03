@@ -1,0 +1,199 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Query: TminiQuery; 
+  json: TminiJson;
+  ErrStr, Sys_DB_SQL, TmpStr, TmpStr2, TmpStr3, OrderFieldName, ztcode, jsondata: string;
+  lp, Sys_DB_PageCount, Sys_DB_RecordCount, Pn: integer;
+  mds: THjhMemoryDataSet;
+  Mt: TminiMemTable;
+  Ms: TMemoryStream;
+%>
+<%
+begin
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO;
+  
+  // 验证是否登录代码
+  if not Request.IsLogin('Logined') then
+  begin 
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '你还没有登录(no logined)！'; 
+    print(json.AsJson(true));
+    exit; 
+  end;//} 
+
+  json.S['retcode'] := '100';
+  if Request.V('readtype') <> '' then  
+  begin 
+    //1.用账套代码连接对应的数据库
+    //if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+    if Request.Session <> nil then //登录时账套代码已保存在ztcode中
+      ztcode := Request.Session.Values['ztcode'];
+    if ztcode = '' then ztcode := Request.V('ztcode'); //也可以直接在URL中加入
+    if not Pub.DB_C(ztcode, ErrStr) then //用账套编码连接数据库
+    begin 
+      json.S['retmsg'] := '数据库连接出错：' + ErrStr; 
+      print(json.AsJson(true));
+      exit; 
+    end;
+    Query := Pub.Query;
+  
+    //////////////////////////////////////////////////////////////////////////////
+    //分页要设置排序字段
+    OrderFieldName := 'crtime';
+    //获取每页记录数
+    Sys_DB_PageCount := 10;
+    if IsNum(Request.V('pagecount')) then 
+      Sys_DB_PageCount := StrToInt(Request.V('pagecount')); 
+    if Sys_DB_PageCount > 100 then Sys_DB_PageCount := 10;
+    //获取页码
+    Pn := 1; 
+    if not IsNum(Request.V('pn')) then 
+      Request.Params.Values['pn'] := '1' 
+    else  
+    begin 
+      try 
+        Pn := StrToInt(trim(Request.V('pn'))); 
+      except 
+       //Request.Params.Values['pn'] := '1'; 
+      end; 
+    end;
+    
+    //读取数据的SQL
+    Sys_DB_SQL := 'select * from users ';
+    
+    TmpStr := Sys_DB_SQL; 
+    TmpStr := StringReplace(TmpStr, #13, ' ', [rfReplaceAll]); 
+    TmpStr := StringReplace(TmpStr, #10, ' ', [rfReplaceAll]); 
+    TmpStr2 := TmpStr; 
+    TmpStr3 := LowerCase(TmpStr);  
+    lp := Pos(' from ', TmpStr3); 
+    if LowerCase(Pub.DbType) = 'excel' then 
+    begin  
+      TmpStr := Copy(TmpStr2, lp + 5, maxint);  
+      TmpStr := 'select count(*) as cc from ' + TmpStr;
+    end else 
+    begin  
+      TmpStr := Copy(TmpStr2, lp + 5, maxint);  
+      TmpStr := 'select count(*) as cc from ' + TmpStr;
+    end;  
+     
+    if (LowerCase(Pub.DbType) = 'mssql') or (LowerCase(Pub.DbType) = 'db2') then 
+    begin 
+      TmpStr3 :=  'select ROW_NUMBER() OVER(order by ' + OrderFieldName + ' desc) as row_number, ' + Copy(TmpStr2, 8, maxint);  
+      TmpStr3 :=  ' select * from ('#13#10 + TmpStr3 + #13#10 + 
+        ')as t '#13#10 + 
+        ' where t.row_number between ' + IntToStr((Pn-1)*Sys_DB_PageCount + 1) + ' and ' + IntToStr(Pn*Sys_DB_PageCount) + ' '; 
+    end else 
+    if LowerCase(Pub.DbType) = 'oracle' then 
+    begin 
+      TmpStr3 :=  'select ROWNUM as row_number, ' + Copy(TmpStr2, 8, maxint);  
+      TmpStr3 :=  ' select * from ('#13#10 + TmpStr3 + #13#10 + 
+      ' order by ' + OrderFieldName + ' desc) t '#13#10 + 
+      ' where t.row_number BETWEEN ' + IntToStr((Pn-1)*Sys_DB_PageCount + 1) + ' AND ' + IntToStr(Pn*Sys_DB_PageCount) + ' '; 
+    end else 
+    if LowerCase(Pub.DbType) = 'sqlite' then 
+    begin 
+      TmpStr3 :=  'select rowid as row_number, ' + Copy(TmpStr2, 8, maxint);  
+      TmpStr3 :=  ' select * from ('#13#10 + TmpStr3 + #13#10 + 
+      ' order by ' + OrderFieldName + ' desc) t '#13#10 + 
+      ' limit ' + IntToStr((Pn-1)*Sys_DB_PageCount) + ',' + IntToStr(Sys_DB_PageCount);   
+    end else 
+    begin 
+      if Pos(' where ', LowerCase(TmpStr2)) < 1 then TmpStr2 := TmpStr2 + ' where 1>0'; 
+      lp := Pos(' from ', TmpStr3);  
+      TmpStr3 := Copy(TmpStr2, 1, lp-1) + ' from ' + Copy(TmpStr2, lp + 5, maxint);   
+      TmpStr3 := StringReplace(TmpStr3, ' where ', ' where ', []);  
+      TmpStr3 := ' select * from (          select *, @rownum := @rownum + 1 AS row_number from (' + TmpStr3 + ' order by ' + OrderFieldName + 
+        ' desc          ) a,(SELECT @rownum := 0 row_numberini) myrownum  )aa   limit ' + IntToStr((Pn-1)*Sys_DB_PageCount) + ',' + IntToStr(Sys_DB_PageCount);   
+    end;  
+    Sys_DB_SQL := TmpStr3; 
+    
+    //获取总记录数
+    if not Query.O(TmpStr, ErrStr) then 
+    begin 
+      json.S['retmsg'] := '读取数据出错：' + ErrStr + TmpStr; 
+      print(json.AsJson(true));
+      exit; 
+    end; 
+    Sys_DB_RecordCount := Query.I('cc');
+
+    //读取一页数据
+    if not Query.O(Sys_DB_SQL, ErrStr) then 
+    begin 
+      json.S['retmsg'] := '读取数据出错：' + ErrStr + Query.SQL.Text; 
+      print(json.AsJson(true));
+      exit; 
+    end; 
+    
+    if Request.V('readtype') = '2' then  
+    begin //返回Json
+      jsondata := DataSet2Json(Query); 
+      json.S['retcode'] := '200';
+      json.S['retmsg'] := '读取数据正确！'; 
+      json.I['recordcount'] := Sys_DB_RecordCount;
+      json.I['pn'] := pn;   
+      json.I['pagecount'] := Sys_DB_PageCount;
+      json.S['data'] := jsondata;
+      Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+      print(json.AsJson(true)); 
+    end else
+    begin //返回二进制流 if Request.V('readtype') = '1' then
+      Mt := Pub.GetMT;
+      mt.CopyDataSet(Query); //把数据复制到内存表中 
+      Ms := Pub.Getms;
+      if not mt.SaveToStream(ms, ErrStr) then //把内存表的数据保存流中
+      begin
+        json.S['retmsg'] := '读取数据出错：' + ErrStr; 
+        print(json.AsJson(true)); 
+        exit;
+      end; 
+      ms.Position := 0;
+      
+      //把所需要的数据保存到内存数据集中，最后以流形式返回给客户端
+      mds := Pub.Getds; //THjhMemoryDataSet.Create(nil); 
+      mds.BlobToBase64 := false;
+      mds.Fields.Fieldlist := 'recordcount,pn,pagecount'; //给内存数据集增加三个字符串字段
+      mds.Fields.Add('data', ftBlob); //给内存数据集再增加一个Blob类型的字段
+      mds.Append(); //增加一条记录
+      mds.S('recordcount', IntToStr(Sys_DB_RecordCount)); //返回所有记录数
+      mds.S('pagecount', IntToStr(Sys_DB_PageCount)); //返回实际每页数
+      mds.S('pn', IntToStr(pn)); //返回当前页码
+      
+      if not mds.FindField('data').BlobLoadFromStream(ms, ErrStr) then 
+      begin
+        json.S['retmsg'] := '读取数据出错：' + ErrStr; 
+        print(json.AsJson(true)); 
+        exit;
+      end;
+      
+      Response.ContentStream := TMemoryStream.Create; //注意不能用 Pub.GetMs，这是因为Pub.GetMs创建的对象在动态脚本运行完就释放了
+      //而Response.ContentStream会在执行脚本后返回数据时调用，并会自动释放 
+      if not mds.SaveToStream(Response.ContentStream, ErrStr) then
+      begin
+        json.S['retmsg'] := '读取数据出错：' + ErrStr; 
+        print(json.AsJson(true)); 
+        exit;
+      end;
+      
+      //返回流数据
+      Response.ContentType := 'application/octet-stream'; 
+    end;  
+
+  end else
+  begin
+    json.S['retcode'] := '350';
+    json.S['retmsg'] := '参数调用不正确(error params)！';
+    print(json.AsJson(true));  
+  end;
+      // }
+
+  
+end;
+%>

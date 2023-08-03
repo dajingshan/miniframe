@@ -1,0 +1,23 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var
+  json: TminiJson;
+%>
+<%
+begin
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO;
+
+  if Request.IsLogin('Logined') then  
+    Request.LogOut('Logined');  
+      
+  json.S['retcode'] := '200';
+  json.S['retmsg'] := '你已退出登录！'; 
+  print(json.AsJson(true)); 
+end;
+%>

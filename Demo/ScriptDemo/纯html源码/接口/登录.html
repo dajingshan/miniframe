@@ -1,0 +1,73 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Query: TminiQuery; 
+  json: TminiJson;
+  ErrStr: string;
+%>
+<%
+begin
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO;
+  json.S['retcode'] := '120';
+  //{ 验证是否登录代码
+  if Request.IsLogin('Logined') then
+  begin 
+    json.S['retcode'] := '160';
+    json.S['retmsg'] := '你已登录！'; 
+    print(json.AsJson(true));
+    exit; 
+  end;//} 
+
+  //1.用账套代码连接对应的数据库
+  //if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+  if not Pub.DB_C(Request.V('ztcode'), ErrStr) then //用账套编码连接数据库
+  begin 
+    json.S['retmsg'] := '数据库连接出错：' + ErrStr; 
+    print(json.AsJson(true));
+    exit; 
+  end;
+
+  //2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号
+  Query := Pub.Query; //取得实例中的Query
+  if not Query.O('select * from users ' +
+    ' where usercode = ' + QuotedStr(Request.V('usercode')) + ' and pwd=' + QuotedStr(Request.V('pwd')) , ErrStr) then 
+  begin 
+    json.S['retmsg'] := '读取数据出错：' + ErrStr;
+    print(json.AsJson(true)); 
+    exit; 
+  end;
+  Query.First; 
+  if Query.FieldByName('id').AsString = '' then 
+  begin   
+    json.S['retcode'] := '150';
+    json.S['retmsg'] := '账号或密码错误((error usercode or pwd)！';
+    print(json.AsJson(true));
+    exit;
+  end; 
+  
+  Request.NewSession; //开启一个会话，以保存登录信息
+  Request.Login('Logined'); //执行登录，Logined为当前登录的标识符
+  Request.Session.Values['userLoginedusername'] := Query.FieldByName('username').AsString; //把用户名保存到会话中
+  Request.Session.Values['userLoginedusercode'] := Query.FieldByName('usercode').AsString; 
+  Request.Session.Values['userLogineduserid'] := Query.FieldByName('id').AsString;  //把密码保存到会话中
+  Request.Session.Values['username'] := Query.FieldByName('username').AsString; //把用户名保存到会话中
+  Request.Session.Values['usercode'] := Query.FieldByName('usercode').AsString; //把用户编码保存到会话中
+  Request.Session.Values['userid'] := Query.FieldByName('id').AsString;  //把密码保存到会话中
+  Request.Session.Values['ztcode'] := Request.V('ztcode'); //把账套编码保存到session里
+  Request.SaveSession; //把会话保存到服务器上的文件中，如果服务器重启将会加载上次的Session
+
+  json.S['retcode'] := '200';
+  json.S['retmsg'] := '密码正确！';
+  json.S['sessionid'] := Request.Session.Sessionid; //返回sessionid
+  json.S['userid'] := Query.FieldByName('id').AsString; 
+  json.S['username'] := Query.FieldByName('username').AsString; 
+  print(json.AsJson(true));
+  
+end;
+%>

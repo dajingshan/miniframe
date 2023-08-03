@@ -1,0 +1,84 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var
+  i,lp: integer;
+  FileName, OldPath: string;
+  json: TminiJson;
+  
+function GetOneDirFileInfo(Json: TminiJson; Path: string): string;
+var
+  Status: Integer;
+  SearchRec: TSearchRec;
+  json_sub: TminiJson;
+begin
+  Path := PathWithSlash(Path);
+  SearchRec := TSearchRec.Create;
+  Status := FindFirst(Path + '*.*', faAnyFile, SearchRec);
+  try
+    while Status = 0 do
+    begin 
+      if SearchRec.Attr and faDirectory = faDirectory then
+      begin
+        if (SearchRec.name <> '.') and (SearchRec.name <> '..') then
+          GetOneDirFileInfo(Json, Path + SearchRec.Name + '\');
+      end else
+      begin
+        FileName := Path + SearchRec.Name;
+        try
+          if FileExists(FileName) then
+          begin 
+            json_sub := Pub.GetJson;  
+            json_sub.SO; //初始化 或 json.Init;    
+            json_sub.S['filename'] := SearchRec.name;
+            json_sub.S['RelativePath'] := GetDeliBack(FileName, OldPath);
+            json_sub.S['FileTime'] := FileGetFileTimeA(FileName);
+            json_sub.I['size'] := SearchRec.Size;
+            json.A['list'] := json_sub;
+          end;
+        except
+          //print(ExceptionParam)
+        end;//}
+      end; 
+      Status := FindNext(SearchRec);
+    end;
+  finally
+    FindClose(SearchRec);
+    SearchRec.Free;
+  end;//*) 
+end;
+%>
+<%
+begin
+  //程序升级更新程序思路：要在服务器有一个专门的文件夹存放最新文件，检查哪些文件更新时，
+  //客户端与之对应的文件如果修改时间不同，大小不同就要重新下载
+  
+  OldPath := 'D:\code\delphi\sign\发行文件'; //待更新源
+  
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO; //初始化 或 json.Init;
+  
+  // 验证是否登录代码
+  {if not Request.IsLogin('Logined') then
+  begin 
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '你还没有登录(no logined)！'; 
+    print(json.AsJson(true));
+    exit; 
+  end;//} 
+  
+  json.S['retcode'] := '200';
+  json.S['retmsg'] := '成功！';
+  if Request.V('opr') = '1' then
+  begin //获取服务上指定目录的文件信息
+    GetOneDirFileInfo(Json, OldPath);
+  end else
+  if Request.V('opr') = '2' then
+  begin //压缩下载一个文件
+    Response.SendFileToClient(ZipOneFile(PathWithSlash(OldPath) + Request.V('RelativePath'), ''));  
+  end;
+  print(json.AsJson(true));
+end;
+%>

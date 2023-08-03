@@ -1,0 +1,60 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Query: TminiQuery; 
+  json: TminiJson;
+  ErrStr, Sys_DB_SQL, TmpStr, TmpStr2, TmpStr3, OrderFieldName, ztcode: string;
+  lp, Sys_DB_PageCount, Sys_DB_RecordCount, Pn: integer;
+  mds: THjhMemoryDataSet;
+  Mt: TminiMemTable;
+  Ms: TMemoryStream;
+  conn: TminiConnection;
+%>
+<%
+begin
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  json := Pub.GetJson; //这样创建json对象不需要自己释放，系统自动管理
+  json.SO;
+  json.S['retcode'] := '100';
+  
+  // 验证是否登录代码
+  if not Request.IsLogin('Logined') then
+  begin 
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '你还没有登录(no logined)！'; 
+    print(json.AsJson(true));
+    exit; 
+  end;//} 
+
+  if Request.V('opr') = '1' then 
+  begin //接收上传文件
+    Request.PostStream.Position := 0;
+    ForceDirectories(ProgramPath + 'file\');
+    Request.PostStream.Savetofile(ProgramPath + 'file\' + Request.V('fn'));
+    if lastError <> '' then 
+    begin
+      json.S['retmsg'] := lastError;
+      print(json.AsJson(true));  
+      exit;  
+    end;
+    json.S['retcode'] := '200'; 
+    json.S['retmsg'] := '文件已保存至服务器上【' + ProgramPath + 'file\' + Request.V('fn') + '】!'; 
+    print(json.AsJson(true));
+  end else
+  if Request.V('opr') = '2' then 
+  begin //下载文件，下载本服务程序exe文件
+    Response.SendFileToClient(ParamStr(0));  
+  end else
+  begin
+    json.S['retcode'] := '300';
+    json.S['retmsg'] := '调用参数不正确！';
+    print(json.AsJson(true));
+    exit;  
+  end;
+  
+end;
+%>

@@ -2083,7 +2083,16 @@ begin
 end;
 
 procedure SIRegister_Others(Cl: TPSPascalCompiler);
+var
+  PSRuntimeClass: TPSCompileTimeClass;
 begin
+  {PSRuntimeClass := cl.FindClass('TStream');
+  with PSRuntimeClass do
+  begin
+    RegisterProperty('Position', 'Integer', iptrw);
+    RegisterProperty('Size', 'Integer', iptrw);
+  end;}
+
   with Cl.AddClassN(cl.FindClass('TObject'), 'TSearchRec') do
   begin
 
@@ -2091,6 +2100,7 @@ begin
 
     RegisterProperty('Time', 'integer', iptRW);
     RegisterProperty('Size', 'Integer', iptRW);
+    RegisterProperty('Size', 'Int64', iptR);
     RegisterProperty('Attr', 'integer', iptRW);
     RegisterProperty('Name', 'string', iptRW);
     RegisterProperty('ExcludeAttr', 'integer', iptRW);
@@ -2158,6 +2168,71 @@ begin
   end;
 end;
 
+procedure TSearchRecSize_R(Self: minicomponents.TSearchRec; var Size: Int64);
+begin
+  flastError := '';
+  try
+    Size := Self.Size;
+  except
+    on e: exception do
+      flastError := e.Message;
+  end;
+end;
+
+procedure TSearchRecSize_W(Self: minicomponents.TSearchRec; Size: Int64);
+begin
+  flastError := '';
+  try
+    Self.Size := Size;
+  except
+    on e: exception do
+      flastError := e.Message;
+  end;
+end;
+
+procedure TStreamSize_R(Self: TStream; var Size: Int64);
+begin
+  flastError := '';
+  try
+    Size := Self.Size;
+  except
+    on e: exception do
+      flastError := e.Message;
+  end;
+end;
+
+procedure TStreamSize_W(Self: TStream; Size: Int64);
+begin
+  flastError := '';
+  try
+    Self.Size := Size;
+  except
+    on e: exception do
+      flastError := e.Message;
+  end;
+end;
+procedure TStreamPosition_R(Self: TStream; var P: Int64);
+begin
+  flastError := '';
+  try
+    P := Self.Position;
+  except
+    on e: exception do
+      flastError := e.Message;
+  end;
+end;
+
+procedure TStreamPosition_W(Self: TStream; P: Int64);
+begin
+  flastError := '';
+  try
+    Self.Position := P;
+  except
+    on e: exception do
+      flastError := e.Message;
+  end;
+end;
+
 procedure TMemoryStream_LoadFromFile(Self: TMemoryStream; FileName: string);
 begin
   flastError := '';
@@ -2208,7 +2283,15 @@ begin
   with Cl.Add(minicomponents.TSearchRec) do
   begin
     RegisterConstructor(@minicomponents.TSearchRec.Create, 'Create');
+    RegisterPropertyHelperName(@TSearchRecSize_R, nil{@TSearchRecSize_W}, 'Size');
   end;
+
+    {PSRuntimeClass := cl.FindClass('TStream');
+  with PSRuntimeClass do
+  begin
+    RegisterPropertyHelperName(@TStreamPosition_R, @TStreamPosition_W, 'Position');
+    RegisterPropertyHelperName(@TStreamSize_R, @TStreamSize_W, 'Size');
+  end; }
 
   PSRuntimeClass := cl.FindClass('TStrings');
   with PSRuntimeClass do

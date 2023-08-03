@@ -37,8 +37,8 @@ type
     //删除给定路径及以下的所有路径和文件 到回收站
     class procedure FileDeleteDirectoryToCycle(AHandle: THandle; ADirName: string);
     //取得指定文件的大小
-    class function  FileGetFileSize(const Filename: string): DWORD;
-    class function  FileGetFileSizeA(const Filename: string): DWORD;
+    class function  FileGetFileSize(const Filename: string): int64;
+    class function  FileGetFileSizeA(const Filename: string): int64;
     //在Path下取得唯一FilenameX文件
     class function  FileGetUniqueFileName(const Path: string; Filename: string): string;
     //取得临时文件
@@ -453,7 +453,7 @@ begin
 end;
 {$endif}
 
-class function PubFile.FileGetFileSize(const Filename: string): DWORD;
+class function PubFile.FileGetFileSize(const Filename: string): int64;
 var
   HFILE: THandle;
   FS: TFileStream;
@@ -476,7 +476,7 @@ begin
     {$else}
        Result := FileGetFileSizeA(Filename);
     {$endif} *)
-    Fs := TFileStream.Create(Filename, fmShareDenyWrite);
+    Fs := TFileStream.Create(Filename, fmShareDenyNone);
     try
       Result := FS.Size;
     finally
@@ -985,7 +985,7 @@ begin
 end;
 {$endif}
 
-class function PubFile.FileGetFileSizeA(const Filename: string): DWORD;
+class function PubFile.FileGetFileSizeA(const Filename: string): int64;
 var
   Sr: TSearchRec;
 begin

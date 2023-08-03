@@ -173,7 +173,7 @@ type
     FName: string;
     FFindHandle: {$ifdef FINDHANDLE_IS_POINTER}Pointer{$else}THandle{$endif};
     FTime: Integer;
-    FSize: Integer;
+    FSize: Int64;
     FAttr: Integer;
     FFindData: TWin32FindData;
     procedure SetAttr(const Value: Integer);
@@ -181,9 +181,10 @@ type
     procedure SetFindHandle(const Value: {$ifdef FINDHANDLE_IS_POINTER}Pointer{$else}THandle{$endif});
     procedure SetMode(AValue: integer);
     procedure SetName(const Value: string);
-    procedure SetSize(const Value: integer);
+    procedure SetSize(const Value: Int64);
     procedure SetTime(const Value: Integer);
     procedure SetFindData(const Value: TWin32FindData);
+    function GetSize: Int64;
   public
     constructor Create;
     destructor Destroy; override;
@@ -192,7 +193,7 @@ type
     property Mode : integer read FMode write SetMode;
     {$endif unix}
     property Time: Integer read FTime write SetTime;
-    property Size: Integer read FSize write SetSize;
+    property Size: Int64 read GetSize write SetSize;
     property Attr: Integer read FAttr write SetAttr;
     property Name: string read FName write SetName;
     property ExcludeAttr: Integer read FExcludeAttr write SetExcludeAttr;
@@ -644,6 +645,11 @@ begin
   inherited;
 end;
 
+function TSearchRec.GetSize: Int64;
+begin
+  Result := FSize;
+end;
+
 procedure TSearchRec.SetAttr(const Value: Integer);
 begin
   FAttr := Value;
@@ -675,7 +681,7 @@ begin
   FName := Value;
 end;
 
-procedure TSearchRec.SetSize(const Value: integer);
+procedure TSearchRec.SetSize(const Value: Int64);
 begin
   FSize := Value;
 end;

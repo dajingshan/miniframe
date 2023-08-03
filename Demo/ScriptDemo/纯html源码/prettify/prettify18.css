@@ -1,0 +1,31 @@
+.str{color:#EC7600}.kwd{color:#93C763}.com{color:#66747B}.typ{color:#678CB1}.lit{color:#FACD22}.pln,.pun{color:#F1F2F3}.tag{color:#8AC763}.atn{color:#E0E2E4}.atv{color:#EC7600}.dec{color:purple}pre.prettyprint{border:0 solid #888}ol.linenums{(@height@) margin-top: 0; margin-bottom: 0;color:gray;font-size:15px;
+  overflow-y: auto;padding-left:35px;}.prettyprint{background:#000}li.L0,li.L1,li.L2,li.L3,li.L4,li.L5,li.L6,li.L7,li.L8,li.L9{color:#555;list-style-type:decimal;line-height:25px}li.L1,li.L3,li.L5,li.L7,li.L9{background:#111;line-height:25px;list-style-type:decimal!important}@media print{.kwd,.tag,.typ{font-weight:700}.str{color:#060}.kwd{color:#006}.com{color:#600;font-style:italic}.typ{color:#404}.lit{color:#044}.pun{color:#440}.pln{color:#000}.tag{color:#006}.atn{color:#404}.atv{color:#060}}
+.linenums::-webkit-scrollbar { 
+   width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/ 
+   height: 10px; 
+   } 
+   .linenums::-webkit-scrollbar-thumb { 
+   border-radius   : 10px; 
+   background-color: skyblue; 
+   background-image: -webkit-linear-gradient( 
+       45deg, 
+       rgba(255, 255, 255, 0.2) 25%, 
+       transparent 25%, 
+       transparent 50%, 
+       rgba(255, 255, 255, 0.2) 50%, 
+       rgba(255, 255, 255, 0.2) 75%, 
+       transparent 75%, 
+       transparent 
+   ); 
+   } 
+   .linenums::-webkit-scrollbar-track { 
+   box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2); 
+   background   : #ededed; 
+   border-radius: 10px; 
+   } 
+ .linenums{ 
+ scrollbar-face-color: skyblue; 
+ scrollbar-shadow-color: inset 0 0 5px rgba(0, 0, 0, 0.2);
+ scrollbar-track-color: #ededed; 
+ scrollbar-arrow-color: skyblue; 
+ } 

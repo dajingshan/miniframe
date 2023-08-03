@@ -1,0 +1,32 @@
+pre .atn,pre .kwd,pre .tag{font-weight:700}pre.prettyprint{display:block;background-color:#fff}pre .nocode{background-color:none;color:#000}pre .str{color:#ffa0a0}pre .kwd{color:khaki}pre .com{color:#87ceeb}pre .typ{color:#98fb98}pre .lit{color:#cd5c5c}pre .pln,pre .pun{color:#6b0505}pre .tag{color:khaki}pre .atn{color:#bdb76b}pre .atv{color:#ffa0a0}pre .dec{color:#98fb98}
+ol.linenums{(@height@) margin-top: 0; margin-bottom: 0;color:gray;
+  overflow-y: auto;padding-left:35px;color:#AEAEAE}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none;line-height:25px}li.L4,li.L9{line-height:25px;list-style-type:decimal!important}@media print{pre.prettyprint{background-color:none}code .str,pre .str{color:#060}code .kwd,pre .kwd{color:#006;font-weight:700}code .com,pre .com{color:#600;font-style:italic}code .typ,pre .typ{color:#404;font-weight:700}code .lit,pre .lit{color:#044}code .pun,pre .pun{color:#440}code .pln,pre .pln{color:#000}code .tag,pre .tag{color:#006;font-weight:700}code .atn,pre .atn{color:#404}code .atv,pre .atv{color:#060}}
+.linenums::-webkit-scrollbar { 
+   width : 10px;  /*高宽分别对应横竖滚动条的尺寸*/ 
+   height: 10px; 
+   } 
+   .linenums::-webkit-scrollbar-thumb { 
+   border-radius   : 10px; 
+   background-color: skyblue; 
+   background-image: -webkit-linear-gradient( 
+       45deg, 
+       rgba(255, 255, 255, 0.2) 25%, 
+       transparent 25%, 
+       transparent 50%, 
+       rgba(255, 255, 255, 0.2) 50%, 
+       rgba(255, 255, 255, 0.2) 75%, 
+       transparent 75%, 
+       transparent 
+   ); 
+   } 
+   .linenums::-webkit-scrollbar-track { 
+   box-shadow   : inset 0 0 5px rgba(0, 0, 0, 0.2); 
+   background   : #ededed; 
+   border-radius: 10px; 
+   } 
+ .linenums{ 
+ scrollbar-face-color: skyblue; 
+ scrollbar-shadow-color: inset 0 0 5px rgba(0, 0, 0, 0.2);
+ scrollbar-track-color: #ededed; 
+ scrollbar-arrow-color: skyblue; 
+ } 

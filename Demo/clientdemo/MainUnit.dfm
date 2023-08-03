@@ -50,7 +50,7 @@ inherited MainForm: TMainForm
       end
       object lblMsg: TLabel [2]
         Left = 160
-        Top = 21
+        Top = 11
         Width = 561
         Height = 19
         Anchors = [akLeft, akTop, akRight]

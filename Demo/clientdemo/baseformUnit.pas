@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, mormot.net.client, Vcl.ExtCtrls,
-  Vcl.Buttons, Vcl.StdCtrls, acPNG;
+  Vcl.Buttons, Vcl.StdCtrls, acPNG, dxGDIPlusClasses;
 
 type
   Tbaseform = class(TForm)

@@ -1245,11 +1245,11 @@ procedure TMainForm.SyncBlockfile_Run(var ThreadRetInfo: TThreadRetInfo);
 const
   BlockSize = 1024*1024; //1M
 var
-  HTML, FromPath, RelativePath, FN, Newfn, isend, TmpFileName, FailFiles, SuccFiles, DelFiles: string;
+  HTML, FromPath, RelativePath, FN, Newfn, isend, TmpFileName, FailFiles, SuccFiles, DelFiles, s, d: string;
   Json, TmpJson: TminiJson;
-  lp, Number, HadUpSize, AllSize, MySize, AllBlockCount: integer;
+  lp,  I, Number, HadUpSize, AllSize, MySize, AllBlockCount, MyNumber: int64;
   Flag: boolean;
-  SL, SLDate, SLSize: TStringlist;
+  SL, SLDate, SLSize, SLOldDateSize: TStringlist;
   MS: TMemoryStream;
   Fs: TFileStream;
   procedure HintMsg(Msg: string);
@@ -1287,8 +1287,11 @@ var
           if not Flag then
           begin //需要在服务新增加
             SL.Add('@add@@' + RelativePath);
-            SLDate.Add(PubFile.FileGetFileTimeA(FromPath + RelativePath));
-            SLSize.Add(PubFile.FileGetFileSize(FromPath + RelativePath).ToString);
+            D := PubFile.FileGetFileTimeA(FromPath + RelativePath);
+            S := PubFile.FileGetFileSize(FromPath + RelativePath).ToString;
+            SLDate.Add(D);
+            SLSize.Add(S);
+            SLOldDateSize.Add(D + S);
           end;
         end;
         Status := FindNext(SearchRec);
@@ -1317,9 +1320,15 @@ begin
   SL := TStringlist.Create;
   SLDate := TStringlist.Create;
   SLSize := TStringlist.Create;
+  SLOldDateSize := TStringlist.Create;
   try
-
+    { html := ThreadRetInfo.html;
+     ThreadRetInfo.Self.Synchronize(ThreadRetInfo.Self, procedure begin
+        ShowMessage(Copy(HTML, 1, 2000));
+      end);
+    exit;}
     Json.LoadFromString(ThreadRetInfo.HTML);
+
     if json.S['retcode'] = '200' then
     begin
       TmpJson := json.A['list'];
@@ -1328,6 +1337,7 @@ begin
       SL.Clear;
       SLdate.Clear;
       SLSize.Clear;
+      SLOldDateSize.Clear;
       for lp := 0 to TmpJson.length - 1 do
       begin
         RelativePath := TmpJson[lp].S['RelativePath'];
@@ -1339,6 +1349,7 @@ begin
             SL.Add('@deldir@@' + RelativePath);
             SLDate.Add('');
             SLSize.Add('');
+            SLOldDateSize.Add('');
           end;
         end else
         begin
@@ -1346,13 +1357,18 @@ begin
           Flag := FileExists(FromPath + RelativePath);
           if Flag then
           begin
-            if (PubFile.FileGetFileTimeA(FromPath + RelativePath) = TmpJson[lp].S['FileTime']) and
-               (PubFile.FileGetFileSize(FromPath + RelativePath) = TmpJson[lp].I['Size']) then
+            D := PubFile.FileGetFileTimeA(FromPath + RelativePath);
+            S := PubFile.FileGetFileSize(FromPath + RelativePath).ToString;
+            if (D = TmpJson[lp].S['FileTime']) and
+               (StrToInt64(S) = TmpJson[lp].I['Size']) then
             else
             begin //需要更新的
               SL.Add('@udp@@' + RelativePath);
-              SLDate.Add(TmpJson[lp].S['FileTime']);
-              SLSize.Add(TmpJson[lp].S['Size']);
+              //SLDate.Add(TmpJson[lp].S['FileTime']);
+              //SLSize.Add(TmpJson[lp].S['Size']);
+              SLDate.Add(D);
+              SLSize.Add(S);
+              SLOldDateSize.Add(D + S);
             end;
           end;
           if not Flag then //需要从服务器上删除的
@@ -1430,58 +1446,84 @@ begin
             HadUpSize := 0;
             AllSize := Fs.Size;
             Fs.Position := 0;
-            ///Newfn := '@_' + ExtractFileName(RelativePath);
-            Newfn := '@_' + PubPWD.GetMd5(SLDate[lp] + SLSize[lp]) + ExtractFileName(RelativePath);
+            Newfn := '@_' + PubPWD.GetMd5(SLOldDateSize[lp]) + ExtractFileName(RelativePath);
+
+            //找断点
+            if not HttpPost('/接口/同步文件到服务器.html?opr=6' + '&newfn=' + UrlEncode(Newfn) ,
+               '', ThreadRetInfo.ErrStr, ThreadRetInfo.HTML) then
+            begin
+              FailFiles := FailFiles + #13#10 + RelativePath;
+              exit;
+            end;
+            MyNumber := 0;
+            Json.LoadFromString(ThreadRetInfo.HTML);
+            if json.S['retcode'] = '210' then
+              MyNumber := StrToInt64(json.S['pos']);
+
             while true do
             begin
               HintMsg('正在上传文件[' + Pub.GetDeliBack(RelativePath, '@@') + ']第[' + IntToStr(Number + 1) + '/' + IntToStr(AllBlockCount) + ']个包。。。');
-              MS.Clear;
               if AllSize - HadUpSize >= BlockSize then
                  MySize := BlockSize
               else
                  MySize := AllSize - HadUpSize;
               HadUpSize := HadUpSize + MySize;
-              MS.CopyFrom(Fs, MySize);
-              Ms.Position := 0;
               Number := Number + 1;
               if HadUpSize >= AllSize then
                 isend := '1'
               else
                 isend := '0';
 
-              if isend <> '1' then
-              begin //最一后个必须上传
-                //先判断服务上已否已存在，存在则不上传，已支持续点
-                if not HttpPost('/接口/同步文件到服务器.html?opr=6&fn=' + UrlEncode(Newfn + IntToStr(Number)),
-                   '', ThreadRetInfo.ErrStr, ThreadRetInfo.HTML) then
-                begin
-                  FailFiles := FailFiles + #13#10 + RelativePath;
-                  exit;
-                end;
-                Json.LoadFromString(ThreadRetInfo.HTML);
-                if json.S['retcode'] = '210' then
-                begin //文件存存在
-                  HintMsg(Json.S['retmsg']);
-                  //Sleep(100);
-                  Continue;
-                end;
-              end;
 
-              if not HttpPost('/接口/同步文件到服务器.html?opr=5&fn=' + UrlEncode(Newfn + IntToStr(Number)) + '&newfn=' + UrlEncode(Newfn) +
-                '&filetime=' + UrlEncode(SLDate[lp]) + '&oldfn=' + UrlEncode(RelativePath) + '&Num=' + IntToStr(Number) + '&isend=' + isend + '&i',
-                 Ms, ThreadRetInfo.ErrStr, ThreadRetInfo.HTML) then
+              if (MyNumber = 0) or (isend = '1') or (Number >= MyNumber) then
               begin
-                FailFiles := FailFiles + #13#10 + RelativePath;
-                exit;
-              end;
-              Json.LoadFromString(ThreadRetInfo.HTML);
-              if json.S['retcode'] <> '200' then
-              begin
-                ThreadRetInfo.ErrStr := Json.S['retmsg'];
-                exit;
-              end;
+                for I := 1 to 2 do //也错重试一次
+                begin
+                  MS.Clear;
+                  MS.CopyFrom(Fs, MySize);
+                  Ms.Position := 0;
+
+                  if not HttpPost('/接口/同步文件到服务器.html?opr=5&fn=' + UrlEncode(Newfn + IntToStr(Number)) + '&newfn=' + UrlEncode(Newfn) +
+                    '&filetime=' + UrlEncode(SLDate[lp]) + '&oldfn=' + UrlEncode(RelativePath) + '&Num=' + IntToStr(Number) +
+                    '&pos=' + IntToStr(HadUpSize - MySize) +'&size=' + IntToStr(AllSize) +
+                    '&isend=' + isend + '&i',
+                     Ms, ThreadRetInfo.ErrStr, ThreadRetInfo.HTML) then
+                  begin
+                    if I = 2 then
+                    begin
+                      ThreadRetInfo.ErrStr := Json.S['retmsg'];
+                      exit;
+                    end else
+                      Continue;
+                  end;
+                  if Pos('{', ThreadRetInfo.HTML) < 1 then
+                  begin
+                    if I = 2 then
+                    begin
+                      ThreadRetInfo.ErrStr := Json.S['retmsg'];
+                      exit;
+                    end else
+                      Continue;
+                  end;
+
+                  Json.LoadFromString(ThreadRetInfo.HTML);
+                  if json.S['retcode'] <> '200' then
+                  begin
+                    if I = 2 then
+                    begin
+                      ThreadRetInfo.ErrStr := Json.S['retmsg'];
+                      exit;
+                    end else
+                      Continue;
+                  end;
+                  break;
+                end;
+              end else
+                Fs.Position := FS.Position + MySize;
               if isend = '1' then
+              begin
                 break;
+              end;
             end;
           finally
             MS.Free;
@@ -1518,10 +1560,11 @@ begin
         ThreadRetInfo.HTML := '本次上传了以下文件：'#13#10 + SuccFiles;
       if trim(DelFiles) <> '' then
         ThreadRetInfo.HTML := '本次删除了以下文件或文件夹：'#13#10 + DelFiles;
-      if trim(FailFiles) <> '' then
-        ThreadRetInfo.HTML := trim(ThreadRetInfo.HTML + #13#10'以下文件更新失败：'#13#10 + FailFiles);
+      //if trim(FailFiles) <> '' then
+        //ThreadRetInfo.HTML := trim(ThreadRetInfo.HTML + #13#10'以下文件更新失败：'#13#10 + FailFiles);
     end;
   finally
+    SLOldDateSize.Free;
     SLSize.Free;
     SL.Free;
     Json.Free;
@@ -1565,9 +1608,9 @@ const
 var
   HTML, ToPath, RelativePath, FN, Tmp, TmpFileName, FailFiles, SuccFiles, Newfn, TmpToPath: string;
   Json, TmpJson: TminiJson;
-  lp, I, Number, HadUpSize, AllSize, AllBlockCount, MySize: integer;
+  lp, I, Number, HadUpSize, AllSize, AllBlockCount, MySize, MyNumber: Int64;
   Flag: boolean;
-  SL, SLDate, SLSize: TStringlist;
+  SL, SLDate, SLSize, SLTmp: TStringlist;
   MS: TMemoryStream;
   Fs: TFileStream;
   procedure HintMsg(Msg: string);
@@ -1594,6 +1637,7 @@ begin
   SL := TStringlist.Create;
   SLDate := TStringlist.Create;
   SLSize := TStringlist.Create;
+  SLTmp := TStringlist.Create;
   try
     Json.LoadFromString(ThreadRetInfo.HTML);
     if json.S['retcode'] = '200' then
@@ -1629,41 +1673,42 @@ begin
         RelativePath := SL[lp];
         if RelativePath[1] = '\' then RelativePath := Copy(RelativePath, 2, MaxInt);
         FN := ToPath + RelativePath;
-        if FileExists(FN) then
-          DeleteFile(FN);
-        if FileExists(FN) then //删除不掉只能改名
-        begin
-          Tmp := ExtractFilePath(FN) + '_Old@_' + ExtractFileName(FN);
-          DeleteFile(Tmp);
-          RenameFile(FN, Tmp);
-        end;
-        if FileExists(FN) then //删除不掉，又改名不成功，不能更新！！！！
-          FailFiles := FailFiles + #13#10 + RelativePath
-        else //可以下载
-        begin
-          //先计算要分几个包，以处理进度
-          Number := 0;
-          HadUpSize := 0;
-          AllSize := StrToInt(SLSize[lp]);
-          AllBlockCount := 0;
-          while true do
-          begin
-            AllBlockCount := AllBlockCount + 1;
-            if AllSize - HadUpSize >= BlockSize then
-               MySize := BlockSize
-            else
-               MySize := AllSize - HadUpSize;
-            HadUpSize := HadUpSize + MySize;
-            if HadUpSize >= AllSize then
-              break;
-          end;
 
-          //开始分包下载
-          Number := 0;
-          HadUpSize := 0;
-          //AllSize := Fs.Size;
-          TmpToPath := PubFile.FileGetTemporaryPath;
-          Newfn := '@_' + PubPWD.GetMd5(SLDate[lp] + SLSize[lp]) + ExtractFileName(FN);  //Pub.GetClientUniqueCode;
+        //先计算要分几个包，以处理进度
+        Number := 0;
+        HadUpSize := 0;
+        AllSize := StrToInt64(SLSize[lp]);
+        AllBlockCount := 0;
+        while true do
+        begin
+          AllBlockCount := AllBlockCount + 1;
+          if AllSize - HadUpSize >= BlockSize then
+             MySize := BlockSize
+          else
+             MySize := AllSize - HadUpSize;
+          HadUpSize := HadUpSize + MySize;
+          if HadUpSize >= AllSize then
+            break;
+        end;
+
+        //开始分包下载
+        Number := 0;
+        HadUpSize := 0;
+        //AllSize := Fs.Size;
+        //TmpToPath := PubFile.FileGetTemporaryPath;
+        Newfn := '@_' + PubPWD.GetMd5(SLDate[lp] + SLSize[lp]) + ExtractFileName(FN);  //Pub.GetClientUniqueCode;
+
+        if FileExists(ToPath + Newfn) and (FileExists(FN)) then
+        begin
+          SLTmp.LoadFromFile(ToPath + Newfn);
+          MyNumber := StrToInt64(trim(SLTmp.Text));
+          Fs := TFileStream.Create(FN, fmOpenWrite);
+        end else
+        begin
+          MyNumber := 0;
+          Fs := TFileStream.Create(FN, fmCreate);
+        end;
+        try
           while true do
           begin
             HintMsg('正在下载文件[' + Pub.GetDeliBack(RelativePath, '@@') + ']第[' + IntToStr(Number + 1) + '/' + IntToStr(AllBlockCount) + ']个包。。。');
@@ -1673,22 +1718,42 @@ begin
             else
                MySize := AllSize - HadUpSize;
             Number := Number + 1;
-            Tmp := TmpToPath + Newfn + IntToStr(Number);
-
-            if not FileExists(Tmp) then //支持断点
+            if (MyNumber = 0) or (Number >= MyNumber) or (HadUpSize + MySize >= AllSize) then
             begin
-              if not HttpPost('/接口/同步文件到客户端.html?opr=2&fn=' + UrlEncode(RelativePath) +
-                '&pos=' + UrlEncode(IntToStr(HadUpSize)) + '&size=' + UrlEncode(IntToStr(MySize)),
-                '', ThreadRetInfo.ErrStr, ThreadRetInfo.HTML, MS) then
+              for I := 1 to 2 do //意外出错重试一次
               begin
-                FailFiles := FailFiles + #13#10 + RelativePath;
-                exit;
-              end;
-              Json.LoadFromString(ThreadRetInfo.HTML);
-              if json.S['retcode'] <> '200' then
-              begin
-                ThreadRetInfo.ErrStr := Json.S['retmsg'];
-                exit;
+                if not HttpPost('/接口/同步文件到客户端.html?opr=2&fn=' + UrlEncode(RelativePath) +
+                  '&pos=' + UrlEncode(IntToStr(HadUpSize)) + '&size=' + UrlEncode(IntToStr(MySize)),
+                  '', ThreadRetInfo.ErrStr, ThreadRetInfo.HTML, MS) then
+                begin
+                  if I = 2 then
+                  begin
+                    ThreadRetInfo.ErrStr := Json.S['retmsg'];
+                    exit;
+                  end else
+                    Continue;
+                end;
+                if Pos('{', ThreadRetInfo.HTML) < 1 then
+                begin
+                  if I = 2 then
+                  begin
+                    ThreadRetInfo.ErrStr := Json.S['retmsg'];
+                    exit;
+                  end else
+                    Continue;
+                end;
+
+                Json.LoadFromString(ThreadRetInfo.HTML);
+                if json.S['retcode'] <> '200' then
+                begin
+                  if I = 2 then
+                  begin
+                    ThreadRetInfo.ErrStr := Json.S['retmsg'];
+                    exit;
+                  end else
+                    Continue;
+                end;
+                break;
               end;
 
               if MS = nil then
@@ -1697,47 +1762,44 @@ begin
                 exit;
               end else
               begin
+                Fs.Position := HadUpSize;
                 MS.Position := 0;
-                ForceDirectories(ExtractFilePath(Tmp));
-                MS.SaveToFile(Tmp);
+                Fs.CopyFrom(MS, MS.Size);
                 MS.Free;
                 MS := nil;
+                SLTmp.Text := Number.ToString;
+                try
+                  SLTmp.SaveToFile(ToPath + Newfn);
+                except
+                end;
               end;
             end;
             HadUpSize := HadUpSize + MySize;
+
             if HadUpSize >= AllSize then
             begin //全部下载完成
-              HintMsg('正在合并文件。。。');
-              Fs := TFileStream.Create(FN, fmCreate);
-              Ms := TMemoryStream.Create;
-              try
-                for I := 1 to AllBlockCount do
-                begin
-                  Tmp := TmpToPath + Newfn + IntToStr(I);
-                  Ms.Clear;
-                  Ms.LoadFromFile(Tmp);
-                  Ms.Position := 0;
-                  Fs.CopyFrom(Ms, Ms.Size);
-                  DeleteFile(Tmp);
-                end;
-              finally
-                Ms.Free;
-                FS.Free;
-              end;
+              Fs.Free;
+              Fs := nil;
+              Sleep(10);
               PubFile.FileChangeFileDate(Fn, SLDate[lp]);
+              DeleteFile(ToPath + Newfn);
               SuccFiles := SuccFiles + #13#10 + RelativePath;
               break;
             end;
           end;
+        finally
+          if Fs <> nil then
+            Fs.Free;
         end;
       end;
       ThreadRetInfo.HTML := '';
       if trim(SuccFiles) <> '' then
         ThreadRetInfo.HTML := '本次更新了以下文件：'#13#10 + SuccFiles;
-      if trim(FailFiles) <> '' then
-        ThreadRetInfo.HTML := trim(ThreadRetInfo.HTML + #13#10'以下文件更新失败：'#13#10 + FailFiles);
+      //if trim(FailFiles) <> '' then
+        //ThreadRetInfo.HTML := trim(ThreadRetInfo.HTML + #13#10'以下文件更新失败：'#13#10 + FailFiles);
     end;
   finally
+    SLTmp.Free;
     SLSize.Free;
     SL.Free;
     Json.Free;
@@ -1753,7 +1815,7 @@ begin
   lblMsg.Caption := '';
   if not ThreadRetInfo.Ok then
   begin
-    Pub.MsgBox('error:' + ThreadRetInfo.ErrStr);
+    Pub.MsgBox('error:' + ThreadRetInfo.ErrStr + Copy(ThreadRetInfo.HTML, 1, 500));
     exit;
   end;
   if trim(ThreadRetInfo.HTML) <> '' then

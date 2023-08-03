@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/> 
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<meta name="Keywords" content="运行日志查看"/>
+<meta name="Description" content="运行日志查看,查看最新2000条。"/>
+<title>运行日志查看</title>
+<link href="css/读取运行日志.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<div class="text_688915 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_688915_b" class="text_688915_b">
+只返回最新2000行
+</text></div>
+<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+//var 
+  //Sys_DB_Info, Sys_DB_Source, Sys_DB_SQL: string; 
+%>
+<%
+begin
+  
+end;
+%>
+<div id="ProgramCode_949763" style=";border: 1px solid #F2F2F2;" class="ProgramCode_949763">
+<?prettify lang=jsv linenums=true?>
+<pre id="ProgramCode_949763_m" class="prettyprint" style="margin:0"><%print(ReadTxtFileContent(extractfilepath(paramstr(0)) + 'log\run.txt', 2000));%>
+</pre></div>
+<script src="prettify/run_prettify.js?autoload=true&amp;lang=html" defer></script>
+</body>
+</html>

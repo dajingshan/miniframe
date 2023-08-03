@@ -1,0 +1,259 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/> 
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<meta name="Keywords" content="THjhMemoryDataSet内存数据集"/>
+<meta name="Description" content="介绍THjhMemoryDataSet内存数据集的使用。THjhMemoryDataSet内存数据集与TminiMemoTable区别：两者都是内存数据集。TminiMemoTable只能用于pascal写的程序中，而THjhMemoryDataSet还可用于js中，同样用于pascal写的程序，TminiMemoTable多线程读取数据不安全，而THjhMemoryDataSet可以多线程安全访问。"/>
+<title>THjhMemoryDataSet内存数据集</title>
+<link href="css/THjhMemoryDataSet内存数据集.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="js/THjhMemoryDataSet内存数据集.js"></script>
+<script src="js/mathcontext.js"></script>
+<script src="js/bigdecimal.js"></script>
+<script src="js/superpub.js"></script>
+<link rel="stylesheet" href="layui/css/layui.css" media="all">
+ <!--[if lt IE 9]> 
+   <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script> 
+   <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script> 
+ <![endif]-->
+<script src="layui/layui.js" charset="utf-8"></script>
+</head>
+<body>
+<div class="text_700302 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_700302_b" class="text_700302_b">
+THjhMemoryDataSet内存数据集
+</text></div>
+<img data-src="images/96.png" name="img_93367" class="img_93367" style="border:0px"/>
+<blockquote class="bq1" style="border-left: 5px solid #008080;border-top:0px;border-right:0px;border-bottom:0px">
+THjhMemoryDataSet内存数据集与TminiMemoTable区别：两者都是内存数据集。TminiMemoTable只能用于pascal写的程序中，而THjhMemoryDataSet还可用于js中，同样用于pascal写的程序，TminiMemoTable多线程读取数据不安全，而THjhMemoryDataSet可以多线程安全访问。
+</blockquote>
+<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量 
+var
+  Sys_DB_Form_ID: string; 
+var  Sys_DB_Fields_div_863438: string; 
+  Sys_DB_div_863438: string;
+var 
+  Sys_DB_Info, Sys_DB_Source, Sys_DB_SQL: string; 
+  Query: TminiQuery; 
+  MT, MT2: TminiMemTable; 
+  ErrStr, TmpStr, TmpStr2, TmpStr3, TmpStr4, TmpStr5: string;  
+  Pooler: TminiPooler; 
+  lp, i, Sys_DB_RecordCount, Sys_DB_PageCount: integer; 
+  SL, SL2, SL3: TStringlist; 
+  mds, mds2: THjhMemoryDataSet;
+%>
+<%
+begin
+
+  { 验证是否登录代码
+  if Request.IsLogin('Logined') then 
+    Print('你已登录<br>')
+  else
+  begin
+    Print('请登录<br>');
+    Response.Redirect('/login1.html');
+    exit;
+  end;} 
+  //登录代码
+  {if (Request.v('username') = 'admin') and (Request.V('password') = '123') then
+  begin    
+    Request.NewSession; //开启一个会话，以保存登录信息
+    Request.Login('Logined'); //执行登录
+    Request.Session.Values['userLoginedusername'] := Request.v('username'); //把用户名保存到会话中
+    Request.Session.Values['userLogineduserid'] := Request.v('username');  //把密码保存到会话中
+    Request.Session.Values['username'] := Request.v('username'); //把用户名保存到会话中
+    Request.Session.Values['userid'] := Request.v('username');  //把密码保存到会话中
+    Request.SaveSession; //把会话保存到服务器上的文件中，如果服务器重启将会加载上次的Session
+    //Response.Redirect(TmpStr); //跳转到网页网址TmpStr中
+    //print(Request.Session.Sessionid); //输出sessionid
+    //print(Request.Session.Values['username']); //输出session保存的username
+  end;}
+  
+  print('<b>如果要使用测试数据库，请下载脚本并安装：<a href="https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot">https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot</a></b><br><br>'#13#10);
+  
+  //1.用账套代码连接对应的数据库
+  print('<font color=blue><b>1.用"账套代码"连接对应的数据库</font>    <font color=red>说明：创建账套请运行 <a href="http://127.0.0.1:899/$">http://127.0.0.1:899/$</a> 切换到账套设置页，' +
+    '增加一个账套编码为“testzt”、名称为“测试账套”的账套，默认登录用户与密码都是 admin </font><br>'#13#10);
+  //if not Pub.O('testzt', Pooler, Query, ErrStr) then //连接数据库，并返回连接实例Pooler和数据集Query 或不返回连接实例Pooler用下面的语句
+  if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+  begin 
+    print('数据库连接出错：' + ErrStr); 
+    exit; 
+  end;
+   
+  //2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号
+  Query := Pub.Query; //取得实例中的Query
+  print('<br><font color=blue>2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号</font><br>'#13#10); 
+  if not Query.O('select * from users ' +
+    ' where username like ' + QuotedStr(Request.V('username') + '%'), ErrStr) then 
+  begin 
+    Print('读取数据出错：' + ErrStr); 
+    exit; 
+  end; 
+  
+  //3.把数据集复制到 THjhMemoryDataSet 内存数据集中
+  print('<br><font color=blue>3.把数据集复制到 THjhMemoryDataSet 内存数据集中，直接遍历内存数据集，输出username</font><br>'#13#10);
+  mds := Pub.GetDs;
+  mds.Dataset := Query;
+  mds.Open;
+  
+  mds.First;
+  while not mds.Eof do 
+  begin
+    Print(mds.V('username') + '<br>');
+    mds.Next;
+  end;
+  
+  //4.手工创建数据集 
+  print('<br><br><font color=blue>4.手工创建数据集 </font><br>');
+  mds := Pub.GetDs; //或用Pub.CreateMemoryDataSet, 这样创建对象THjhMemoryDataSet不需要自己释放，系统自动管理
+  mds.Fields.FieldList := 'name,sex,class,score'; //建表头
+  mds.Fields.add('avg', ftstring); //也可以这样一项一贡增加表头
+  
+  //添加数据
+  mds.Append;
+  mds.FieldByName('name').AsString := 'lix1';
+  mds.FieldByName('sex').AsString := '男';
+  mds.FieldByName('class').AsString := '二年级';
+  mds.FieldByName('score').AsString := '99';
+  mds.FieldByName('avg').AsString := '98';
+  mds.Append;
+  mds.FieldByName('name').AsString := '小红';
+  mds.FieldByName('sex').AsString := '女';
+  mds.FieldByName('class').AsString := '五年级';
+  mds.FieldByName('score').AsString := '100';
+  mds.FieldByName('avg').AsString := '98';
+  mds.first;
+  while not mds.eof do 
+  begin
+    Print(mds.FieldByName('name').AsString  + '----' + mds.FieldByName('sex').AsString  + '----' + mds.FieldByName('class').AsString + 
+      '----' + mds.FieldByName('score').AsString + '----' + mds.FieldByName('avg').AsString + '<br>');
+    mds.Next;
+  end; 
+  
+  print('<br><br>mds.FieldByName(...).AsString 可以简写成这样：mds.V(...)<br>');
+  mds.first;
+  while not mds.eof do 
+  begin
+    Print(mds.V('name')  + '----' + mds.V('sex')  + '----' + mds.V('class') + 
+      '----' + mds.V('score') + '----' + mds.V('avg') + '<br>');
+    mds.Next;
+  end; 
+  
+  
+  print('<br>以下是另一种方法遍历数据集，这种方法对线程安全，这是与TminiMemTable区别最大优点，还有THjhMemoryDataSet还能直接用到js下<br>');
+  
+  for lp := 0 to mds.RecordCount - 1 do                                                              
+  begin
+    Print(mds.Records[lp, 'name']  + '----' + mds.Records[lp, 'sex']  + '----' + mds.Records[lp, 'class'] + 
+      '----' + mds.Records[lp, 'score'] + '----' + mds.Records[lp, 'avg'] + '<br>');
+  end; 
+  //5.js端的THjhMemoryDataSet 
+  print('<br><br><font color=blue>5.js端的THjhMemoryDataSet</font>');  
+  //} *)
+end;
+%>
+
+
+<script>
+  var mds = getDS(''); //getDS在superpub.js中定义，创建一个THjhMemoryDataSet对象 
+  
+  mds.SetCommaText(<% print(QuotedStr(mds.CommaText)); %>); //<% print(QuotedStr(mds.CommaText)); %> 把后台数据直接生成到客户端，供js端的THjhMemoryDataSet.SetCommaText加载。、
+  mds.First();
+  while(! mds.Eof)
+  { 
+    alert(mds.FieldByName('name').AsString() + '----' + mds.V('sex') + '----' + mds.V('class') + '----' + mds.V('score') + '----' + mds.V('avg'));
+    mds.Next();
+  }
+  
+</script>
+<div id="div_863438" class="div_863438">
+<%
+
+  Sys_DB_div_863438 := 'WRITE_TABLE=,"READ_TABLE_SQL=//注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := ''select * from [users$] where usercode = '' + QuotedStr(Request.V(''usercode''));'''#13#10+
+''#13#10+
+'Sys_DB_SQL := ''select * from users where usercode = '' + QuotedStr(Request.V(''usercode''));",KEYWORD=,SYS_DB_SOURCE=testzt,SYS_DB_FORM_ID=div_863438';
+  Sys_DB_Info := 'WRITE_TABLE=,"READ_TABLE_SQL=//注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := ''select * from [users$] where usercode = '' + QuotedStr(Request.V(''usercode''));'''#13#10+
+''#13#10+
+'Sys_DB_SQL := ''select * from users where usercode = '' + QuotedStr(Request.V(''usercode''));",KEYWORD=,SYS_DB_SOURCE=testzt,SYS_DB_FORM_ID=div_863438';
+  Sys_DB_Source := 'testzt';
+  Sys_DB_PageCount := 0;
+  Sys_DB_Form_ID := 'div_863438';
+%>
+<%SL3 := TStringlist.Create;
+try %>
+
+<% Sys_DB_Fields_div_863438 := SL3.CommaText; 
+finally SL3.Free end;%>
+ <% 
+//注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := 'select * from [users$] where usercode = ' + QuotedStr(Request.V('usercode'));'
+
+Sys_DB_SQL := 'select * from users where usercode = ' + QuotedStr(Request.V('usercode'));
+ %> 
+<% 
+  if not Pub.O('testzt', Pooler, Query, ErrStr) then 
+  begin 
+    Print('[%@clear@%]'); print('数据库连接出错：' + ErrStr); 
+    Print('<script>window.name = "isReload"; </script>'); 
+    exit; 
+  end; 
+    if Query <> nil then 
+    begin 
+      if not Query.O(Sys_DB_SQL, ErrStr) then 
+      begin 
+        Print('[%@clear@%]'); print('读取数据出错：' + ErrStr + Query.SQL.Text); 
+        Print('<script>window.name = "isReload"; </script>'); 
+        exit; 
+      end; 
+      ErrStr := Decrypt_ds(Query, Sys_DB_Fields_div_863438); 
+      if trim(ErrStr) <> '' then 
+      begin 
+        Print('[%@clear@%]'); print('读取数据出错：' + ErrStr); 
+        Print('<script>window.name = "isReload"; </script>'); 
+        exit; 
+      end; 
+    end; 
+    if Pooler.DBType = 'memorytable' then   
+    begin 
+      mds := Pooler.mds; 
+      DBMemory_Load(mds, Pooler.DBName, Sys_DB_Fields_div_863438); 
+    end; 
+    if Request.V('readtype') = '1' then  
+    begin 
+      Print('[%@clear@%]');
+      if Pooler.DBType = 'memorytable' then   
+      begin 
+        Print(IntToStr(Sys_DB_RecordCount) + '@' + mds.CommaText); 
+      end else 
+      begin 
+         mds := THjhMemoryDataSet.Create(nil); 
+         try 
+           mds.DataSet := Query; 
+           mds.Open; 
+           Print(IntToStr(Sys_DB_RecordCount) + '@' + mds.CommaText); 
+         finally 
+           mds.Free; 
+         end;  
+      end; 
+      exit;
+    end else
+    begin
+    end;
+ %>
+<input name="Fields" value="<%print(Base64Encode(Sys_DB_Fields_div_863438));%>" hidden="hidden"/>
+<input name="KeyWords" value="" hidden="hidden"/>
+<input name="db_form_info" value="167F1E7C0C1C13730B017F71607E6B7F50564C4054545B5D46494A50203130C82E38A1B80A435F4B4C46DD204523AEE906AB684138126A14BB1A68454E617B021E111208657C7A686E392E20282D3B707B7235263A3B77032C293E2E2E7A0240160A06160046121B0C180803090B4F4D5155535F552702170D1F1F2F090C57D2E4F3F6E1F6F2A9DEA1ADFEFFE8FCECFFF5F7B4BDBCADB095939791CFE4EDC0E4E3FDF0F5E9869D95898DD8C9C1CBCCC4919893D2C7D9DA98CCC9DECECE9EC8A8A4B0A6E4B0B5A2BAAAA5AFA9EDF3EFF7F1F9F385A0B9A3BDBD89AFAEF58CBA9194879090CBB0CFCF9C998E9E8E818B95D6DBDACFD7DABCBDA0ADB4AEB9C3D35358515C40475954475C584849307A6A6365686738464F44475D58445A524C527F68661E404C5078101F191F1F15" hidden="hidden"/>
+<text name="BefSave_Js" hidden="hidden"></text>
+<text name="AftSave_Js" hidden="hidden">       if (trim(r)!=""){if(Pos("成功",r)>0){mymsg("保存成功！")} else {myalert(r);} } [@@@@]</text>
+<text name="db_cname" hidden="hidden"></text>
+</div>
+<script type="text/javascript" src="js/THjhMemoryDataSet内存数据集aft.js"></script>
+</body>
+</html>

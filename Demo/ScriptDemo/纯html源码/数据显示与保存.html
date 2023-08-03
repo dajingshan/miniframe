@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/> 
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<title>数据显示与保存</title>
+<link href="css/数据显示与保存.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+</head>
+<body>
+<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Sys_DB_Info, Sys_DB_Source, Sys_DB_SQL: string; 
+  Query: TminiQuery; 
+  MT, MT2: TminiMemTable; 
+  ErrStr, TmpStr, TmpStr2, TmpStr3, TmpStr4, TmpStr5: string;  
+  Pooler: TminiPooler; 
+  lp, i, Sys_DB_RecordCount, Sys_DB_PageCount: integer; 
+  SL, SL2, SL3: TStringlist; 
+  mds, mds2: THjhMemoryDataSet;
+%>
+<%
+begin
+  
+  print('<b>如果要使用测试数据库，请下载脚本并安装：<a href="https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot">https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot</a></b><br><br>'#13#10);
+  
+  //1.用账套代码连接对应的数据库
+  print('<font color=blue><b>1.用"账套代码"连接对应的数据库</font>    <font color=red>说明：创建账套请运行 <a href="http://127.0.0.1:899/$">http://127.0.0.1:899/$</a> 切换到账套设置页，' +
+    '增加一个账套编码为“testzt”、名称为“测试账套”的账套，默认登录用户与密码都是 admin </font><br>'#13#10);
+  //if not Pub.O('testzt', Pooler, Query, ErrStr) then //连接数据库，并返回连接实例Pooler和数据集Query 或不返回连接实例Pooler用下面的语句
+  if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+  begin 
+    print('数据库连接出错：' + ErrStr); 
+    exit; 
+  end;
+  Query := Pub.Query; //取得实例中的Query
+  
+  //2.前端点“保存”后，后台开始保存数据，获取表单Form上或URL中的每项的数据，用 Request.V(...)
+  print('<br><font color=blue>2.前端点“保存”后，后台开始保存数据，获取表单Form上或URL中的每项的数据，用 Request.V(...)</font><br>'#13#10);
+  if (Request.V('Save') = '1') and (Request.V('id') <> '') then //URL中 Save=1 且 form上的id值不为空才能保存 
+  begin
+    if not Query.E(' update users set note =N' + QuotedStr(Request.V('note')) + ',usercode=' + QuotedStr(Request.V('usercode')) +
+      ',username=N' + QuotedStr(Request.V('username')) +
+      ' where id = ' + QuotedStr(Request.V('id')), ErrStr) then
+    begin
+      Response.Clear;
+      Print('<font color=red size=5>保存数据时出错！' + ErrStr + '</font>');
+      exit;
+    end; 
+    
+    Print('<br><font color=blue size=5>恭喜数据已保存！' + formatdatetime('yyyy-mm-dd hh:nn:ss', now) + '</font><br><br>');
+    
+  end;
+   
+  //3.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号
+  print('<br><font color=blue>3.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号</font><br>'#13#10); 
+  if not Query.O('select * from users '// +' where username like ' + QuotedStr(Request.V('username') + '%')
+    , ErrStr) then 
+  begin 
+    Print('读取数据出错：' + ErrStr); 
+    exit; 
+  end; 
+
+end;
+%>
+<div class="text_494992" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+3.需要显示数据库数据的地方，如&lt;% print(Query.V('username')); %&gt;，注意凡引用脚本生成数据的地方，要使用&lt;%...%&gt;，&lt;%...%&gt;里面是一组pascal语句。print表示输出值，语句结束一定要用分号.
+</text></div>
+<div class="div_544257">
+<div id="Form_465294" class="Form_465294">
+<form id="Form_465294_Form" method="POST" action="?save=1">
+<div class="text_4 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_4_b" class="text_4_b">
+ID
+</text></div>
+<input id="id" name="id" class="id" type = "text"  value="<% print(Query.V('ID')); %>">
+</input>
+<div class="text_981696 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_981696_b" class="text_981696_b">
+编号
+</text></div>
+<input id="usercode" name="usercode" class="usercode" type = "text"  value="<% print(Query.V('usercode')); %>">
+</input>
+<div class="text_1 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_1_b" class="text_1_b">
+姓名
+</text></div>
+<input id="username" name="username" class="username" type = "text"  value="<% print(Query.V('username')); %>">
+</input>
+<div class="text_2 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_2_b" class="text_2_b">
+备注
+</text></div>
+<textarea id="note" name="note" class="note">
+<% print(Query.V('note')); %>
+</textarea>
+<input type="submit" id="button_804298" name="button_804298" class="button_804298" value="保存">
+<div class="text_326801 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_326801_b" class="text_326801_b">
+<% print(Query.V('note')); %>
+</text></div>
+</form></div>
+</div>
+<div class="text_494992 text_tb" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_3_b" class="text_3_b">
+4.更多利用网页保存数据的功能，请参照<a href="https://www.wyeditor.com/demo/">数据库demo</a>
+</text></div>
+</body>
+</html>

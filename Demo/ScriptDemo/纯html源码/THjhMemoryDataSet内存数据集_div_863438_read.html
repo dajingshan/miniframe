@@ -1,0 +1,89 @@
+﻿<%@//Script头、过程和函数定义 
+program procode;
+ %> 
+ <%!//声明变量 
+ var  
+  Sys_DB_Info, Sys_DB_Source, Sys_DB_SQL: string; 
+   Query: TminiQuery;  
+   ErrStr, TmpStr, TmpStr2, TmpStr3, TmpStr4, TmpStr5: string;   
+   Pooler: TminiPooler;   
+   lp, i, Sys_DB_RecordCount, Sys_DB_PageCount: integer;  
+   SL, SL2, SL3: TStringlist;  
+   mds, mds2: THjhMemoryDataSet; 
+   Sys_DB_div_863438: string;
+   Sys_DB_Fields_div_863438: string;
+   Sys_DB_Form_ID: string;
+   flag: boolean;
+ %> 
+<%
+
+  Sys_DB_div_863438 := 'WRITE_TABLE=,"READ_TABLE_SQL=//注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := ''select * from [users$] where usercode = '' + QuotedStr(Request.V(''usercode''));'''#13#10+
+''#13#10+
+'Sys_DB_SQL := ''select * from users where usercode = '' + QuotedStr(Request.V(''usercode''));",KEYWORD=,SYS_DB_SOURCE=testzt,SYS_DB_FORM_ID=div_863438';
+  Sys_DB_Info := 'WRITE_TABLE=,"READ_TABLE_SQL=//注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := ''select * from [users$] where usercode = '' + QuotedStr(Request.V(''usercode''));'''#13#10+
+''#13#10+
+'Sys_DB_SQL := ''select * from users where usercode = '' + QuotedStr(Request.V(''usercode''));",KEYWORD=,SYS_DB_SOURCE=testzt,SYS_DB_FORM_ID=div_863438';
+  Sys_DB_Source := 'testzt';
+  Sys_DB_PageCount := 0;
+  Sys_DB_Form_ID := 'div_863438';
+%>
+<%SL3 := TStringlist.Create;
+try %>
+
+<% Sys_DB_Fields_div_863438 := SL3.CommaText; 
+finally SL3.Free end;%>
+ <% 
+//注意：如果是excel时，表名要这样写[页名$],如 Sys_DB_SQL := 'select * from [users$] where usercode = ' + QuotedStr(Request.V('usercode'));'
+
+Sys_DB_SQL := 'select * from users where usercode = ' + QuotedStr(Request.V('usercode'));
+ %> 
+<% 
+  if not Pub.O('testzt', Pooler, Query, ErrStr) then 
+  begin 
+    Print('[%@clear@%]'); print('数据库连接出错：' + ErrStr); 
+    Print('<script>window.name = "isReload"; </script>'); 
+    exit; 
+  end; 
+    if Query <> nil then 
+    begin 
+      if not Query.O(Sys_DB_SQL, ErrStr) then 
+      begin 
+        Print('[%@clear@%]'); print('读取数据出错：' + ErrStr + Query.SQL.Text); 
+        Print('<script>window.name = "isReload"; </script>'); 
+        exit; 
+      end; 
+      ErrStr := Decrypt_ds(Query, Sys_DB_Fields_div_863438); 
+      if trim(ErrStr) <> '' then 
+      begin 
+        Print('[%@clear@%]'); print('读取数据出错：' + ErrStr); 
+        Print('<script>window.name = "isReload"; </script>'); 
+        exit; 
+      end; 
+    end; 
+    if Pooler.DBType = 'memorytable' then   
+    begin 
+      mds := Pooler.mds; 
+      DBMemory_Load(mds, Pooler.DBName, Sys_DB_Fields_div_863438); 
+    end; 
+    if Request.V('readtype') = '1' then  
+    begin 
+      Print('[%@clear@%]');
+      if Pooler.DBType = 'memorytable' then   
+      begin 
+        Print(IntToStr(Sys_DB_RecordCount) + '@' + mds.CommaText); 
+      end else 
+      begin 
+         mds := THjhMemoryDataSet.Create(nil); 
+         try 
+           mds.DataSet := Query; 
+           mds.Open; 
+           Print(IntToStr(Sys_DB_RecordCount) + '@' + mds.CommaText); 
+         finally 
+           mds.Free; 
+         end;  
+      end; 
+      exit;
+    end else
+    begin
+    end;
+ %>

@@ -1,0 +1,45 @@
+﻿<html>
+<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var
+  lp: integer;
+%>
+
+<%
+begin
+%>  
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>与HTML元素混合编程</title>
+</head>
+<body>
+<div>你好，当前时间是：<% print(DatetimeToStr(now)); %>。下面将生成<font color=red> 20 </font>个input，偶数行的字体是红色。</div>
+<br>
+ <% 
+  for lp := 1 to 20 do 
+  begin 
+    if (lp mod 2 = 0) then
+    begin 
+  %> 
+      <input style="color:red;font-size:6" id= "id<% print(inttostr(lp));  %>" value="<% print(DatetimeToStr(IncSecond(now, lp)));%>"/>
+    <%  
+    end else
+    begin
+    %> 
+      <input id= "id<% print(inttostr(lp));  %>" value="<% print(DatetimeToStr(IncDay(now, lp)));%>"/>
+    <%
+    end;
+    %>
+    <br>
+    <br>
+  <%
+  end;
+  %>  
+</body>
+<%
+end;
+%>
+</html>

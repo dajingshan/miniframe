@@ -1,0 +1,135 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  Sys_DB_Info, Sys_DB_Source, Sys_DB_SQL: string; 
+  Query: TminiQuery; 
+  MT, MT2: TminiMemTable; 
+  ErrStr, TmpStr, TmpStr2, TmpStr3, TmpStr4, TmpStr5: string;  
+  Pooler: TminiPooler; 
+  lp, i, Sys_DB_RecordCount, Sys_DB_PageCount: integer; 
+  SL, SL2, SL3: TStringlist; 
+  mds, mds2: THjhMemoryDataSet;
+%>
+<%
+begin
+
+  { 验证是否登录代码
+  if Request.IsLogin('Logined') then 
+    Print('你已登录<br>')
+  else
+  begin
+    Print('请登录<br>');
+    Response.Redirect('/login1.html');
+    exit;
+  end;} 
+  //登录代码
+  {if (Request.v('username') = 'admin') and (Request.V('password') = '123') then
+  begin    
+    Request.NewSession; //开启一个会话，以保存登录信息
+    Request.Login('Logined'); //执行登录
+    Request.Session.Values['userLoginedusername'] := Request.v('username'); //把用户名保存到会话中
+    Request.Session.Values['userLogineduserid'] := Request.v('username');  //把密码保存到会话中
+    Request.Session.Values['username'] := Request.v('username'); //把用户名保存到会话中
+    Request.Session.Values['userid'] := Request.v('username');  //把密码保存到会话中
+    Request.SaveSession; //把会话保存到服务器上的文件中，如果服务器重启将会加载上次的Session
+    //Response.Redirect(TmpStr); //跳转到网页网址TmpStr中
+    //print(Request.Session.Sessionid); //输出sessionid
+    //print(Request.Session.Values['username']); //输出session保存的username
+  end;}
+  
+  print('<b>如果要使用测试数据库，请下载脚本并安装：<a href="https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot">https://wyeditor.com/doc/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9B%B8%E5%85%B3/note.html#inot</a></b><br><br>'#13#10);
+  
+  //1.用账套代码连接对应的数据库
+  print('<font color=blue><b>1.用"账套代码"连接对应的数据库</font>    <font color=red>说明：创建账套请运行 <a href="http://127.0.0.1:899/$">http://127.0.0.1:899/$</a> 切换到账套设置页，' +
+    '增加一个账套编码为“testzt”、名称为“测试账套”的账套，默认登录用户与密码都是 admin </font><br>'#13#10);
+  //if not Pub.O('testzt', Pooler, Query, ErrStr) then //连接数据库，并返回连接实例Pooler和数据集Query 或不返回连接实例Pooler用下面的语句
+  if not Pub.DB_C('testzt', ErrStr) then //连接数据库
+  begin 
+    print('数据库连接出错：' + ErrStr); 
+    exit; 
+  end;
+   
+  //2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号
+  Query := Pub.Query; //取得实例中的Query
+  print('<br><font color=blue>2.执行SQL并返回数据在Query中  --从url或post数据中取一项数据 Request.V(''subject''), QuotedStr: 给字符串加单引号</font><br>'#13#10); 
+  if not Query.O('select * from users ' +
+    ' where username like ' + QuotedStr(Request.V('username') + '%'), ErrStr) then 
+  begin 
+    Print('读取数据出错：' + ErrStr); 
+    exit; 
+  end; 
+  
+  //3.直接遍历数据集，输出username
+  print('<br><font color=blue>3.直接遍历数据集，输出username</font><br>'#13#10);
+  Query.First;
+  while not Query.Eof do 
+  begin
+    Print(Query.V('username') + '<br>');
+    Query.Next;
+  end;
+
+  //4.把数据集复制到内存表中
+  print('<br><font color=blue>4.把数据集复制到内存表中</font><br>'#13#10);
+  Mt := Pub.GetMT; //这样创建TminiMemTable无需释放，系统会自动释放
+  //try
+    ErrStr := Mt.CopyDataSet(Query);
+    if trim(ErrStr) <> '' then 
+    begin
+      Print(ErrStr);
+      exit;
+    end;
+    Mt.First;
+    while not Mt.Eof do 
+    begin
+      //Print(Mt.V('username') + '--' + inttostr(MT.I('note2')) + '<br>');
+      Print(Mt.V('username') + '--' + MT.V('note2') + '<br>');
+      Mt.Next;
+    end;
+  //finally
+    //MT1.Free;
+  //end;
+   
+  //5.执行SQL更新表数据，启用了数据库事 
+  print('<br><font color=blue>5.执行SQL更新表数据，启用了数据库事务</font>'#13#10); 
+  //开启事务
+  if not Pub.Conn.StartTrans(ErrStr) then
+  begin
+    Pub.Conn.Rollback(ErrStr);
+    //写到运行日志中
+    WriteRunLogToFile('启动数据库事务出错！' + ErrStr + #13#10);
+    Print('启动数据库事务出错！' + ErrStr + '<br>');
+    exit;
+  end;
+  //执行更新
+  if not Query.E('update users set note2 =N' + QuotedStr(DateTimeToStr(Now) + ': 数据已更新！®！') + 
+     ' where username like ' + QuotedStr('%a%'), ErrStr) then 
+  begin 
+    //执行出错回滚事务
+    if not Pub.Conn.Rollback(ErrStr) then
+    begin
+      //写到运行日志中
+      WriteRunLogToFile('回滚数据库事务出错！' + ErrStr + #13#10);
+      Print('回滚数据库事务出错！' + ErrStr + '<br>');
+      exit;
+    end;
+    Print('更新表数据出错：' + ErrStr); 
+    exit; 
+  end; 
+  //提交事务
+  if not Pub.Conn.Commit(ErrStr) then
+  begin
+    //写到运行日志中
+    WriteRunLogToFile('提交数据库事务出错！' + ErrStr + #13#10); 
+    exit;
+  end;
+  //写到运行日志中
+  WriteRunLogToFile('提交数据库事务成功！');
+  Print('<br>提交数据库事务成功！' + '<br>'#13#10);
+    
+  print('<br><font color=red size=5>---执行SQL更新表数据成功，影响的条数：' + inttostr(Query.RowsAffected) + '</font>'#13#10);
+  //} *)
+end;
+%>

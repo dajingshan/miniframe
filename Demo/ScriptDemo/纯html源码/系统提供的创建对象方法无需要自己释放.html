@@ -1,0 +1,143 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var 
+  aa, ErrStr: string; 
+  json: TminiJson;
+  lp: integer;
+  ms: TMemoryStream;
+  SL: TStringlist;
+  mt: TminiMemTable;
+  ds: THjhMemoryDataSet;
+%>
+
+<%
+begin
+  //json 用的superobject 库
+
+  Response.ContentType := 'application/json;charset=UTF-8'; //返回的数据类型
+  
+  //Pub是一个公共对象
+  
+  //1.json对象的创建 Pub.GetJson
+  print('1.json对象的创建 Pub.GetJson '#13#10);
+  json := Pub.GetJson; //或用Pub.CreateJson, 这样创建json对象不需要自己释放，系统自动管理
+  json.SO; //初始化
+
+  json.I['retcode'] := 200;
+  json.S['retmsg'] := '操作成功！';  
+  
+  print(json.AsJson(true));
+ 
+  
+  //2.TStringlist创建 Pub.GetSL
+  print(#13#10#13#10 + '2.TStringlist创建 Pub.GetSL'#13#10);
+  SL := Pub.GetSL; //或用Pub.CreateStringlist, 这样创建TStringlist对象不需要自己释放，系统自动管理
+  SL.Text := json.AsJson(false);
+  print(SL.Text);
+   
+  //3.TminiMemTable创建 Pub.GetMT  TminiMemTable基于TVirtualTable
+  print(#13#10#13#10 + '3.TminiMemTable创建 Pub.GetMT'#13#10);
+  mt := Pub.GetMT; //或用Pub.CreateMemTable, 这样创建TminiMemTable对象不需要自己释放，系统自动管理
+  mt.FieldDefs.Clear;
+  mt.FieldDefs.Add('name', ftstring, 200, false);
+  mt.FieldDefs.Add('score', ftstring, 200, false);
+                        
+  if not mt.Open(ErrStr) then
+  begin
+    Print('mt.Open Error:' + ErrStr);
+    exit;
+  end;
+ 
+
+  mt.Append();                            
+  mt.FieldByName('name').AsString := '小明';
+  mt.FieldByName('score').AsString := '80';
+  mt.Append(); 
+  mt.FieldByName('name').AsString := '小芳';
+  mt.FieldByName('score').AsString := '90'; 
+  
+  mt.first;
+  while not mt.eof do 
+  begin
+    Print(mt.FieldByName('name').AsString  + '----' + mt.FieldByName('score').AsString + #13#10);
+    mt.Next;
+  end;                                
+  
+  //4.TMemoryStream创建 Pub.GetMs
+  print(#13#10#13#10 + '4.TMemoryStream创建 Pub.GetMs'#13#10);
+  ms := Pub.GetMS; //或用Pub.CreateMemoryStream, 这样创建对象TMemoryStream不需要自己释放，系统自动管理
+  json.SaveToStream(ms);
+  ms.Position := 0;
+  Sl.LoadFromStream(ms); 
+  print(SL.Text);
+  
+  //5.THjhMemoryDataSet创建 Pub.GetDs
+  print(#13#10#13#10 + '5.THjhMemoryDataSet创建 Pub.GetMs'#13#10);
+  ds := Pub.GetDs; //或用Pub.CreateMemoryDataSet, 这样创建对象THjhMemoryDataSet不需要自己释放，系统自动管理
+  ds.Fields.FieldList := 'name,sex,class,score';
+  ds.Fields.add('avg', ftstring);
+  ds.Append;
+  ds.FieldByName('name').AsString := 'lix1';
+  ds.FieldByName('sex').AsString := '男';
+  ds.FieldByName('class').AsString := '二年级';
+  ds.FieldByName('score').AsString := '99';
+  ds.FieldByName('avg').AsString := '98';
+  ds.Append;
+  ds.FieldByName('name').AsString := '小红';
+  ds.FieldByName('sex').AsString := '女';
+  ds.FieldByName('class').AsString := '五年级';
+  ds.FieldByName('score').AsString := '100';
+  ds.FieldByName('avg').AsString := '98';
+  ds.first;
+  while not ds.eof do 
+  begin
+    Print(ds.FieldByName('name').AsString  + '----' + ds.FieldByName('sex').AsString  + '----' + ds.FieldByName('class').AsString + 
+      '----' + ds.FieldByName('score').AsString + '----' + ds.FieldByName('avg').AsString + #13#10);
+    ds.Next;
+  end; 
+  
+  print(#13#10'以下是另一种方法遍历数据集，这种方法对线程安全，这是与TminiMemTable区别最大优点，还有THjhMemoryDataSet还能直接用到js下'#13#10);
+  
+  for lp := 0 to ds.RecordCount - 1 do                                                              
+  begin
+    Print(ds.Records[lp, 'name']  + '----' + ds.Records[lp, 'sex']  + '----' + ds.Records[lp, 'class'] + 
+      '----' + ds.Records[lp, 'score'] + '----' + ds.Records[lp, 'avg'] + #13#10);
+  end; 
+  //print(ds.CommaText);  
+  
+  
+  //6.TminiQuery创建 Pub.GetQuery 或 Pub.CreateQuery 一般情况下不需要创建，系统默认提供了一个 Pub.Query
+  print(#13#10#13#10 + 'TminiQuery创建 Pub.GetQuery 或 Pub.CreateQuery 一般情况下不需要创建，系统默认提供了一个 Pub.Query'#13#10);
+  //7.TminiStoredProc创建 Pub.GetSp 或 Pub.CreateStoredProc
+  print(#13#10#13#10 + '7.TminiStoredProc创建 Pub.GetSp 或 Pub.CreateStoredProc'#13#10);
+  //}                                              
+  {
+      RegisterMethod('function CreateStringlist: TStringlist');
+    RegisterMethod('function GetSL: TStringlist');
+
+    RegisterMethod('function CreateMemTable: TminiMemTable');
+    RegisterMethod('function GetMT: TminiMemTable');
+
+    RegisterMethod('function CreateMemoryStream: TMemoryStream');
+    RegisterMethod('function GetMs: TMemoryStream');
+
+    RegisterMethod('function CreateMemoryDataSet: THjhMemoryDataSet');
+    RegisterMethod('function GetDS: THjhMemoryDataSet');
+
+    RegisterMethod('function CreateJson: TminiJson');
+    RegisterMethod('function GetJson: TminiJson');
+
+    RegisterMethod('function CreateConn: TminiConnection');
+    RegisterMethod('function GetConn: TminiConnection');
+
+    RegisterMethod('function CreateQuery: TminiQuery');
+    RegisterMethod('function GetQuery: TminiQuery');
+
+    RegisterMethod('function CreateStoredProc: TminiStoredProc');
+    RegisterMethod('function GetSp: TminiStoredProc');  }
+ 
+end;
+%>

@@ -1,0 +1,52 @@
+﻿<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+var
+  i: integer;
+  SL: TStringlist;
+%>
+
+<%
+begin
+  print('<font color=red>说明：pascalscript例外处理不能像delphi或lazaru那样能通过"on e:exception do"直接能获取到错误信息，需要通过ExceptionParam(ExceptionParam相当于pascal的exception.message)函数获取！</font><br><br>');
+  try
+    i := 0;
+    print('SL Error 9999999999：' + ExceptionParam + '<br>');
+    print('以下执行将引发除零错！<br><br>');
+    print('4/i=' + floattostr(4/i)); 
+    print('能看到这行表示没出错！<br>');
+  except
+    //不支持 on e:exception do
+    print('出错了!出错信息：' + ExceptionParam + '<br>');
+    i := 3;
+  end;
+    
+  print('<br>除零错误后继续输出：<br>');
+  print('i=' + IntToStr(i) + ', 4/i=' + floattostr(4/i)); 
+  
+  print('<br><br>');
+  print('<font color=blue>特别说明：前面这种数学运算产生的错误无论是delphi或lazarus都可以在except里通过ExceptionParam获取到错误信息，但对于以下的非数学运算产生的错误，razarus不能在except中获取到错误信息，但delphi可以。请参考下面的代码</font>');
+  print('<br><br>');
+  try
+    SL := Pub.GetSL;
+    SL.savetofile('d:\');
+    
+    print('<font color=blue>lazarus错误处理，由于lazarus在出错时会直接导致程序崩溃，delphi不会，所以lazarus必须要对每个调用函数的出错要在各自函数内处理，' +
+     '如本例的 TStringlist.SaveToFile在miniregister单元中重写了，重写的还有TStringlist.LoadFromFile，TMemoryStream.SaveToFile, TMemoryStream.LoadFromFile。<br>');
+    if trim(lastError) <> '' then //这段代码适用lazarus，不适用delphi，delphi要在except中处理
+    begin
+      print('lazarus获取出错信息： SL Error：' + lastError + '<br>');
+      i := 2;
+    end;
+  except
+    //不支持 on e:exception do
+    print('delphi获取出错信息： SL Error：' + ExceptionParam + '<br>');
+    i := 2;
+  end;
+  
+  print('<br>保存文件出错后继续输出：<br>');
+  print('i=' + IntToStr(i) + ', 4/i=' + floattostr(4/i)); 
+end;
+%>

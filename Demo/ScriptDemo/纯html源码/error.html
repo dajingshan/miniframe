@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html> 
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8"/> 
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+<meta name="Keywords" content="访问出错，所访的问页面不存在"/>
+<meta name="Description" content="访问出错，所访的问页面不存在。"/>
+<title>访问出错，所访的问页面不存在</title>
+<link href="css/error.css" rel="stylesheet">
+<script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="js/error.js"></script>
+<link rel="stylesheet" href="css/animate.css">
+</head>
+<body>
+<%@//Script头、过程和函数定义
+program codes;
+%>
+
+<%!//声明变量
+
+%>
+<%
+begin
+  
+end;
+%>
+<div class="mainbody wow rollIn">
+<marquee  class="info wow bounceInUp" direction=right behavior=alternate>
+很抱歉告诉你，你访问的页面[<%  print(Request.V('errorfilename')); %>]不在宇宙中！
+</marquee>
+<a href="<% print(Request.v('errorfilename'));%>" class="c_text_1">
+<div class="text_1 text_tb wow anim-lubit" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_1_b" class="text_1_b">
+刷新
+</text></div>
+</a>
+<a href="/" class="c_text_987615">
+<div class="text_987615 text_tb wow anim-lubit" style=";border-left:0px;border-top:0px;border-right:0px;border-bottom:0px;">
+<text id="text_987615_b" class="text_987615_b">
+返回首页
+</text></div>
+</a>
+<div id="img_663778" class="img_663778">
+<img data-src="images/error.png" id="img_663778_img" name="img_663778_img"  class="img_663778_img"style = "width:auto;height:100%;border:0px">
+</div>
+</div>
+<script src="js/wow.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/erroraft.js"></script>
+</body>
+</html>

@@ -14,8 +14,6 @@ inherited MainForm: TMainForm
     Height = 759
     Width = 1074
     BevelOuter = bvNone
-    ClientHeight = 759
-    ClientWidth = 1074
     inherited plTopBar: TPanel
       Left = 0
       Top = 0
